@@ -13,6 +13,25 @@ package com.scu927.entity;
     private String timeSlot;         // Time slot for the booking (e.g., "08:00-10:00")
     private Integer quantity;        // Number of spots being booked (e.g., 2 people)
 
+    private String name;        // real name
+
+    private String phoneNumber;        // real name
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public Long getId() {
         return id;

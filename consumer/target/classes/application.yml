@@ -1,12 +1,12 @@
 spring:
   application:
-    name: service-consumer  # 设置 consumer 的服务名称
+    name: service-consumer  #  consumer service
 
   mail:
     host: smtp.163.com
     port: 465
-    username: wangchuhan163@163.com  # 你的网易邮箱账号
-    password: MENKESUSSCYAITMB               # 你的网易邮箱授权码（不是登录密码）
+    username: wangchuhan163@163.com  # Replace with your email address
+    password: MENKESUSSCYAITMB               # Replace with your email authorization code (not the login password)
     properties:
       mail:
         smtp:
@@ -20,6 +20,10 @@ spring:
       port: 5672          # Default RabbitMQ port
       username: guest     # Default username for RabbitMQ
       password: guest     # Default password for RabbitMQ
+      queues:
+        - name: scenicSpotQueue
+        - name: roomBookingQueue
+        - name: tableReservationQueue
 
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/consumer_db?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC

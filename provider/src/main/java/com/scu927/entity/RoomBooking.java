@@ -12,7 +12,7 @@ public class RoomBooking {
     private String bookingDate;  // Booking date
     private String name;  // Guest name
     private String homeAddress;  // Home address
-    private String contactNumber;  // Contact number
+    private String phoneNumber;  // Contact number
     private String email;  // Email address
     private String roomGrade;  // Room grade
     private BigDecimal totalAmount;  // Total amount for the booking
@@ -57,12 +57,13 @@ public class RoomBooking {
         this.homeAddress = homeAddress;
     }
 
-    public String getContactNumber() {
-        return contactNumber;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {

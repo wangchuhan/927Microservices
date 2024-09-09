@@ -34,7 +34,7 @@ public class RoomBookingServiceImpl extends ServiceImpl<RoomBookingMapper, RoomB
         try {
             // Validate inputs
             if (isEmpty(request.getName()) || isEmpty(request.getHomeAddress()) ||
-                    isEmpty(request.getContactNumber()) || isEmpty(request.getEmail()) ||
+                    isEmpty(request.getPhoneNumber()) || isEmpty(request.getEmail()) ||
                     isEmpty(request.getBookingDate()) || isEmpty(request.getRoomGrade())) {
                 return Response.error(400, "All fields must be filled out");
             }
@@ -52,7 +52,7 @@ public class RoomBookingServiceImpl extends ServiceImpl<RoomBookingMapper, RoomB
                 booking.setBookingDate(request.getBookingDate());
                 booking.setName(request.getName());
                 booking.setHomeAddress(request.getHomeAddress());
-                booking.setContactNumber(request.getContactNumber());
+                booking.setPhoneNumber(request.getPhoneNumber());
                 booking.setEmail(request.getEmail());
                 booking.setRoomGrade(request.getRoomGrade());
                 booking.setTotalAmount(selectedRoom.getPrice());

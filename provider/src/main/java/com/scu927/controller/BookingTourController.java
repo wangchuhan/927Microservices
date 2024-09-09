@@ -19,7 +19,7 @@ public class BookingTourController {
     private IBookingService bookingService;
 
     @PostMapping("/create")
-    public Response<Booking> createBooking(@RequestBody BookingRequest bookingRequest) {
+    public Response<?> createBooking(@RequestBody BookingRequest bookingRequest) {
 
        return bookingService.createBooking(bookingRequest);
 

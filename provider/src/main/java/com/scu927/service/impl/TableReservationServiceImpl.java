@@ -9,7 +9,7 @@ import com.scu927.entity.Table;
 import com.scu927.entity.TableReservation;
 import com.scu927.mapper.TableMapper;
 import com.scu927.mapper.TableReservationMapper;
-import com.scu927.producer.MessageProducer;
+import com.scu927.producer.EmailMessageProducer;
 import com.scu927.service.TableReservationService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +21,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import static org.apache.logging.log4j.util.Strings.isEmpty;
 
 
 /**
@@ -44,7 +42,7 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
     private RabbitTemplate rabbitTemplate;
 
     @Autowired
-    private MessageProducer messageProducer;
+    private EmailMessageProducer messageProducer;
 
     @Override
     public Response<?> reserveTable(TableReservationRequest request) {
@@ -131,7 +129,7 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
               String finalMessage = message.toString();
 
                 // Send the message to the RabbitMQ queue
-                messageProducer.sendReservationMessage(finalMessage);
+                messageProducer.sendEmailMessage(finalMessage,"tableReservationQueue");
                 return Response.success(reservation).setMessage("Reservation confirmed!");
             } else {
                 // If no tables are available, find alternative time slots

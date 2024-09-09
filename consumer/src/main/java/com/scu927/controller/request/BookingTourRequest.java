@@ -5,7 +5,7 @@ package com.scu927.controller.request;
  * @date 2024/9/8
  */
 
-public class BookingRequest {
+public class BookingTourRequest {
     private Long scenicSpotId;     // ID of the scenic spot to be booked
     private String bookingDate;    // Date of the booking in string format (e.g., "2024-09-15")
     private String timeSlot;       // Time slot for the booking (e.g., "08:00-10:00")
@@ -14,11 +14,22 @@ public class BookingRequest {
     private String username;       // Username of the user making the booking
     private String email;          // Email address of the user making the booking
 
+
     private String name;            // User's full name
     private String phoneNumber;     // User's contact number
 
+
+
     // Getters and Setters
 
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getName() {
         return name;
@@ -28,13 +39,6 @@ public class BookingRequest {
         this.name = name;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
 
     public String getUsername() {
         return username;

@@ -12,5 +12,5 @@ import com.scu927.controller.request.BookingRequest;
 import com.scu927.entity.Booking;
 
 public interface IBookingService extends IService<Booking> {
-    Response<Booking> createBooking(BookingRequest bookingRequest);
+    Response<?> createBooking(BookingRequest bookingRequest);
 }

@@ -12,8 +12,7 @@ public class RoomBookingRequest {
     private String bookingDate;  // Booking date
     private String roomGrade;  // Room grade (Standard, Deluxe, Suite)
 
-    private String username;     // User's contact number
-
+    private String username;     // User's id
     private String phoneNumber;     // User's contact number
 
     public String getUsername() {

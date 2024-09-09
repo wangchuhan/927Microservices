@@ -4,21 +4,23 @@ import com.scu927.client.ProviderClient;
 import com.scu927.common.Response;
 import com.scu927.config.JwtUtil;
 import com.scu927.controller.request.RoomBookingRequest;
-import com.scu927.controller.request.TableReservationRequest;
 import com.scu927.service.IRoomBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Chuhan
  * @date 2024/9/9
  */
-public class RoomBookingService implements IRoomBookingService {
+@Service
+public class RoomBookingImpl implements IRoomBookingService {
 
     @Autowired
     private ProviderClient providerClient;
 
     @Autowired
     private JwtUtil jwtUtil;  // Inject the JwtTokenUtil
+
 
     @Override
     public Response<?> processBooking(String authorizationHeader, RoomBookingRequest request) {
@@ -35,8 +37,9 @@ public class RoomBookingService implements IRoomBookingService {
         request.setName(name);
         request.setPhoneNumber(phoneNumber);
         request.setEmail(email);
-        return providerClient.reserveTable(request);
+        return providerClient.roomBooking(request);
     }
+
 
     // from Authorization header get JWT Token
     private String extractTokenFromHeader(String authorizationHeader) {
