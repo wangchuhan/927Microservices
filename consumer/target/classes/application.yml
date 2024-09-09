@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: service-consumer  # 设置 consumer 的服务名称
+
+  mail:
+    host: smtp.163.com
+    port: 25
+    username: wangchuhan163@163.com  # 你的网易邮箱账号
+    password: MENKESUSSCYAITMB               # 你的网易邮箱授权码（不是登录密码）
+    properties:
+      mail:
+        smtp:
+          auth: true
+
+
+  spring:
+    rabbitmq:
+      host: localhost     # RabbitMQ server address, or the address of the remote RabbitMQ server
+      port: 5672          # Default RabbitMQ port
+      username: guest     # Default username for RabbitMQ
+      password: guest     # Default password for RabbitMQ
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/consumer_db?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  port: 8082  # consumer 服务运行的端口
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/  # 指向 Eureka Server 的地址
+  instance:
+    prefer-ip-address: true  # 注册时使用 IP 地址
+
+
+
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.demo.entity
+
+logging:
+  level:
+    org.springframework.security: DEBUG
