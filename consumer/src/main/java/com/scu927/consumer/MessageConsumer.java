@@ -17,7 +17,7 @@ public class MessageConsumer {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Value("${mail.username}")
+    @Value("${spring.mail.username}")
     private  String mailAddress;
 
     // Listen to the reservationQueue and process incoming messages

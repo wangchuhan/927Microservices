@@ -1,14 +1,9 @@
 package com.scu927.service.impl;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import com.scu927.client.ProviderClient;
 import com.scu927.common.Response;
 import com.scu927.config.JwtUtil;
 import com.scu927.controller.request.TableReservationRequest;
-import com.scu927.entity.User;
-import com.scu927.mapper.UserMapper;
-
-
 import com.scu927.service.ITableReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

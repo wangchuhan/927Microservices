@@ -1,17 +1,18 @@
 spring:
   application:
-    name: service-consumer  # 设置 consumer 的服务名称
+    name: service-consumer  #  consumer service
 
   mail:
-    host: smtp.163.com          # Replace with your email provider's SMTP server
-    port: 25                     # Replace with the correct port number for your provider
-    username: wangchuhan163@163.com  # Your  email account, replace with your own
-    password:        # Your email authorization code (not the login password), replace with your own
+    host: smtp.163.com
+    port: 465
+    username: wangchuhan163@163.com  # Replace with your email address
+    password:                # Replace with your email authorization code (not the login password)
     properties:
       mail:
         smtp:
           auth: true
-
+          ssl:
+            enable: true
 
   spring:
     rabbitmq:
