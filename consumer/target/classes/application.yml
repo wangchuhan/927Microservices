@@ -4,14 +4,15 @@ spring:
 
   mail:
     host: smtp.163.com
-    port: 25
+    port: 465
     username: wangchuhan163@163.com  # 你的网易邮箱账号
     password: MENKESUSSCYAITMB               # 你的网易邮箱授权码（不是登录密码）
     properties:
       mail:
         smtp:
           auth: true
-
+          ssl:
+            enable: true
 
   spring:
     rabbitmq:
