@@ -5,7 +5,7 @@ package com.scu927.controller.request;
  * @date 2024/9/8
  */
 
-public class BookingTourRequest {
+public class TourBookingRequest {
     private Long scenicSpotId;     // ID of the scenic spot to be booked
     private String bookingDate;    // Date of the booking in string format (e.g., "2024-09-15")
     private String timeSlot;       // Time slot for the booking (e.g., "08:00-10:00")
