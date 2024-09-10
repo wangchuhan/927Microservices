@@ -1,0 +1,55 @@
+-- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
+--
+-- Host: 127.0.0.1    Database: provider_db
+-- ------------------------------------------------------
+-- Server version	8.0.39
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `rooms`
+--
+
+DROP TABLE IF EXISTS `rooms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rooms` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `room_grade` varchar(255) NOT NULL,
+  `capacity` int NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `is_available` tinyint(1) DEFAULT '1',
+  `room_condition` varchar(50) DEFAULT 'AVAILABLE',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rooms`
+--
+
+LOCK TABLES `rooms` WRITE;
+/*!40000 ALTER TABLE `rooms` DISABLE KEYS */;
+INSERT INTO `rooms` VALUES (1,'Standard',2,100.00,1,'AVAILABLE'),(2,'Standard',2,100.00,1,'AVAILABLE'),(3,'Standard',2,100.00,1,'AVAILABLE'),(4,'Standard',2,100.00,1,'AVAILABLE'),(5,'Standard',2,100.00,1,'AVAILABLE'),(6,'Standard',2,100.00,1,'AVAILABLE'),(7,'Standard',2,100.00,1,'AVAILABLE'),(8,'Standard',2,100.00,1,'AVAILABLE'),(9,'Standard',2,100.00,1,'AVAILABLE'),(10,'Standard',2,100.00,1,'AVAILABLE'),(11,'Standard',3,120.00,1,'AVAILABLE'),(12,'Standard',3,120.00,1,'AVAILABLE'),(13,'Standard',3,120.00,1,'AVAILABLE'),(14,'Standard',3,120.00,1,'AVAILABLE'),(15,'Standard',3,120.00,1,'AVAILABLE'),(16,'Standard',3,120.00,1,'AVAILABLE'),(17,'Standard',3,120.00,1,'AVAILABLE'),(18,'Standard',3,120.00,1,'AVAILABLE'),(19,'Standard',3,120.00,1,'AVAILABLE'),(20,'Standard',3,120.00,1,'AVAILABLE'),(21,'Deluxe',4,150.00,1,'AVAILABLE'),(22,'Deluxe',4,150.00,1,'AVAILABLE'),(23,'Deluxe',4,150.00,1,'AVAILABLE'),(24,'Deluxe',4,150.00,1,'AVAILABLE'),(25,'Deluxe',4,150.00,1,'AVAILABLE'),(26,'Deluxe',4,150.00,1,'AVAILABLE'),(27,'Deluxe',4,150.00,1,'AVAILABLE'),(28,'Deluxe',4,150.00,1,'AVAILABLE'),(29,'Deluxe',4,150.00,1,'AVAILABLE'),(30,'Deluxe',4,150.00,1,'AVAILABLE'),(31,'Deluxe',5,180.00,1,'AVAILABLE'),(32,'Deluxe',5,180.00,1,'AVAILABLE'),(33,'Deluxe',5,180.00,1,'AVAILABLE'),(34,'Deluxe',5,180.00,1,'AVAILABLE'),(35,'Deluxe',5,180.00,1,'AVAILABLE'),(36,'Deluxe',5,180.00,1,'AVAILABLE'),(37,'Deluxe',5,180.00,1,'AVAILABLE'),(38,'Deluxe',5,180.00,1,'AVAILABLE'),(39,'Deluxe',5,180.00,1,'AVAILABLE'),(40,'Deluxe',5,180.00,1,'AVAILABLE'),(41,'Suite',6,250.00,1,'AVAILABLE'),(42,'Suite',6,250.00,1,'AVAILABLE'),(43,'Suite',6,250.00,1,'AVAILABLE'),(44,'Suite',6,250.00,1,'AVAILABLE'),(45,'Suite',6,250.00,1,'AVAILABLE'),(46,'Suite',6,250.00,1,'AVAILABLE'),(47,'Suite',6,250.00,1,'AVAILABLE'),(48,'Suite',6,250.00,1,'AVAILABLE'),(49,'Suite',6,250.00,1,'AVAILABLE'),(50,'Suite',6,250.00,1,'AVAILABLE'),(51,'Suite',7,300.00,1,'AVAILABLE'),(52,'Suite',7,300.00,1,'AVAILABLE'),(53,'Suite',7,300.00,1,'AVAILABLE'),(54,'Suite',7,300.00,1,'AVAILABLE'),(55,'Suite',7,300.00,1,'AVAILABLE'),(56,'Suite',7,300.00,1,'AVAILABLE'),(57,'Suite',7,300.00,1,'AVAILABLE'),(58,'Suite',7,300.00,1,'AVAILABLE'),(59,'Suite',7,300.00,1,'AVAILABLE'),(60,'Suite',7,300.00,1,'AVAILABLE'),(61,'Standard',2,100.00,1,'AVAILABLE'),(62,'Standard',2,100.00,1,'AVAILABLE'),(63,'Standard',2,100.00,1,'AVAILABLE'),(64,'Standard',2,100.00,1,'AVAILABLE'),(65,'Standard',2,100.00,1,'AVAILABLE'),(66,'Standard',2,100.00,1,'AVAILABLE'),(67,'Standard',2,100.00,1,'AVAILABLE'),(68,'Standard',2,100.00,1,'AVAILABLE'),(69,'Standard',2,100.00,1,'AVAILABLE'),(70,'Standard',2,100.00,1,'AVAILABLE'),(71,'Standard',3,120.00,1,'AVAILABLE'),(72,'Standard',3,120.00,1,'AVAILABLE'),(73,'Standard',3,120.00,1,'AVAILABLE'),(74,'Standard',3,120.00,1,'AVAILABLE'),(75,'Standard',3,120.00,1,'AVAILABLE'),(76,'Standard',3,120.00,1,'AVAILABLE'),(77,'Standard',3,120.00,1,'AVAILABLE'),(78,'Standard',3,120.00,1,'AVAILABLE'),(79,'Standard',3,120.00,1,'AVAILABLE'),(80,'Standard',3,120.00,1,'AVAILABLE'),(81,'Deluxe',4,150.00,1,'AVAILABLE'),(82,'Deluxe',4,150.00,1,'AVAILABLE'),(83,'Deluxe',4,150.00,1,'AVAILABLE'),(84,'Deluxe',4,150.00,1,'AVAILABLE'),(85,'Deluxe',4,150.00,1,'AVAILABLE'),(86,'Deluxe',4,150.00,1,'AVAILABLE'),(87,'Deluxe',4,150.00,1,'AVAILABLE'),(88,'Deluxe',4,150.00,1,'AVAILABLE'),(89,'Deluxe',4,150.00,1,'AVAILABLE'),(90,'Deluxe',4,150.00,1,'AVAILABLE'),(91,'Suite',6,250.00,1,'AVAILABLE'),(92,'Suite',6,250.00,1,'AVAILABLE'),(93,'Suite',6,250.00,1,'AVAILABLE'),(94,'Suite',6,250.00,1,'AVAILABLE'),(95,'Suite',6,250.00,1,'AVAILABLE');
+/*!40000 ALTER TABLE `rooms` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2024-09-11  9:20:36
