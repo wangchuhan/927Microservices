@@ -1,9 +1,7 @@
 package com.scu927.client;
 
 import com.scu927.common.Response;
-import com.scu927.controller.request.BookingTourRequest;
-import com.scu927.controller.request.RoomBookingRequest;
-import com.scu927.controller.request.TableReservationRequest;
+import com.scu927.controller.request.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,11 +20,17 @@ public interface ProviderClient {
 
 
     @PostMapping("/api/bookings/create")
-    Response<?> bookingTour(@RequestBody BookingTourRequest request);
+    Response<?> bookingTour(@RequestBody TourBookingRequest request);
 
 
     @PostMapping("/api/room-bookings/book")
     Response<?> roomBooking(@RequestBody RoomBookingRequest request);
 
 
+    @PostMapping("/api/room-bookings/payment")
+    Response<?> payment(@RequestBody PaymentRequest request);
+
+
+    @PostMapping("/api/room-bookings/cancel")
+    Response<?> cancelBooking(@RequestBody CancelBookingRequest request);
 }

@@ -25,7 +25,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User selectByUsername(String userName) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username", userName); // 查询条件：用户名匹配
+        queryWrapper.eq("username", userName); //query condition：match by username
         // 执行查询
         return userMapper.selectOne(queryWrapper);
 

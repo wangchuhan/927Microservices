@@ -9,7 +9,7 @@ import com.scu927.controller.request.BookingRequest;
 
 import com.scu927.controller.response.BookingDetailsResponse;
 import com.scu927.entity.Booking;
-import com.scu927.mapper.BookingMapper;
+import com.scu927.mapper.TourBookingMapper;
 import com.scu927.mapper.ScenicSpotMapper;
 import com.scu927.producer.EmailMessageProducer;
 
@@ -21,10 +21,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 
 @Service
-public class BookingServiceImpl extends ServiceImpl<BookingMapper, Booking> implements IBookingService {
+public class BookingServiceImpl extends ServiceImpl<TourBookingMapper, Booking> implements IBookingService {
 
     @Autowired
-    private BookingMapper bookingMapper;
+    private TourBookingMapper bookingMapper;
 
     @Autowired
     private ScenicSpotMapper scenicSpotMapper;

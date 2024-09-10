@@ -1,7 +1,7 @@
 package com.scu927.service;
 
 import com.scu927.common.Response;
-import com.scu927.controller.request.BookingTourRequest;
+import com.scu927.controller.request.TourBookingRequest;
 
 /**
  * @author Chuhan
@@ -9,5 +9,5 @@ import com.scu927.controller.request.BookingTourRequest;
  */
 public interface IBookingTourService {
 
-    Response<?> bookingTour(String authorizationHeader, BookingTourRequest request);
+    Response<?> bookingTour(String authorizationHeader, TourBookingRequest request);
 }

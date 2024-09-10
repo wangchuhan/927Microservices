@@ -1,4 +1,4 @@
-package com.scu927.entity;
+package com.scu927.controller.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -19,7 +19,18 @@ public class PaymentRequest {
     @NotNull(message = "paymentMethod cannot be null")
     private String paymentMethod;
 
-    // Getters and Setters
+    @NotNull(message = "email cannot be null")
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+// Getters and Setters
 
     public String getUsername() {
         return username;

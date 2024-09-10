@@ -14,7 +14,12 @@ import java.util.List;
  */
 @Mapper
 public interface RoomMapper extends BaseMapper<Room> {
-    @Select("SELECT * FROM rooms WHERE room_grade = #{roomGrade} AND is_available = true AND id NOT IN " +
-            "(SELECT room_id FROM room_booking WHERE booking_date = #{bookingDate})")
+//    @Select("SELECT * FROM rooms WHERE room_grade = #{roomGrade} AND is_available = true AND id NOT IN " +
+//            "(SELECT room_id FROM room_booking WHERE booking_date = #{bookingDate})")
+//    List<Room> findAvailableRooms(@Param("roomGrade") String roomGrade, @Param("bookingDate") String bookingDate);
+
+    @Select("SELECT * FROM rooms WHERE room_grade = #{roomGrade} AND is_available = true " +
+            "AND room_condition = 'AVAILABLE' " +  // add condition：room status must beAVAILABLE
+            "AND id NOT IN (SELECT room_id FROM room_booking WHERE booking_date = #{bookingDate})")
     List<Room> findAvailableRooms(@Param("roomGrade") String roomGrade, @Param("bookingDate") String bookingDate);
 }

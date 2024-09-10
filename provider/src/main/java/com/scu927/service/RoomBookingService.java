@@ -1,7 +1,9 @@
 package com.scu927.service;
 
 import com.scu927.common.Response;
+import com.scu927.controller.request.CancelBookingRequest;
 import com.scu927.controller.request.RoomBookingRequest;
+
 
 /**
  * @author Chuhan
@@ -9,4 +11,6 @@ import com.scu927.controller.request.RoomBookingRequest;
  */
 public interface RoomBookingService {
     Response<?> processBooking(RoomBookingRequest request);
+
+    Response<?> cancelBooking(CancelBookingRequest request);
 }

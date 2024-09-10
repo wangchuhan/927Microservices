@@ -1,6 +1,17 @@
 spring:
   application:
     name: service-consumer  #  consumer service
+  rabbitmq:
+    host: localhost     # RabbitMQ server address, or the address of the remote RabbitMQ server
+    port: 5672          # Default RabbitMQ port
+    username: guest     # Default username for RabbitMQ
+    password: guest     # Default password for RabbitMQ
+    queues:
+      - name: scenicSpotQueue
+      - name: roomBookingQueue
+      - name: tableReservationQueue
+
+
 
   mail:
     host: smtp.163.com
@@ -14,16 +25,10 @@ spring:
           ssl:
             enable: true
 
-  spring:
-    rabbitmq:
-      host: localhost     # RabbitMQ server address, or the address of the remote RabbitMQ server
-      port: 5672          # Default RabbitMQ port
-      username: guest     # Default username for RabbitMQ
-      password: guest     # Default password for RabbitMQ
-      queues:
-        - name: scenicSpotQueue
-        - name: roomBookingQueue
-        - name: tableReservationQueue
+  jwt:
+    privateKey: weAXnlH9N59IXifWhAvwm/YWymNPUEKW3uQIp6CVI4k=
+
+
 
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/consumer_db?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
@@ -51,3 +56,11 @@ mybatis-plus:
 logging:
   level:
     org.springframework.security: DEBUG
+
+
+
+
+
+
+
+

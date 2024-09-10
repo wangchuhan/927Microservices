@@ -8,7 +8,7 @@ public class PasswordGenerator {
 
     public static void main(String[] args) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String rawPassword = "123"; // 这里可以替换成你想要加密的密码
+        String rawPassword = "123"; //
         String encodedPassword = passwordEncoder.encode(rawPassword);
 
         System.out.println("原始密码: " + rawPassword);

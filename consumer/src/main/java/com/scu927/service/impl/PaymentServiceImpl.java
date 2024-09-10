@@ -1,18 +1,15 @@
 package com.scu927.service.impl;
 
+import com.scu927.client.ProviderClient;
 import com.scu927.common.Response;
+import com.scu927.config.JwtUtil;
 import com.scu927.controller.request.PaymentRequest;
-import com.scu927.controller.response.RoomBookingDetailsResponse;
-import com.scu927.entity.RoomBooking;
-import com.scu927.entity.RoomBookingPayment;
-import com.scu927.mapper.RoomBookingMapper;
-import com.scu927.mapper.RoomBookingPaymentMapper;
+
 import com.scu927.service.IPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 
 /**
  * @author Chuhan
@@ -22,54 +19,33 @@ import java.util.Date;
 public class PaymentServiceImpl implements IPaymentService {
 
     @Autowired
-    private RoomBookingMapper roomBookingMapper;
+    private ProviderClient providerClient;
 
     @Autowired
-    private RoomBookingPaymentMapper roomBookingPaymentMapper;
+    private JwtUtil jwtUtil;  // Inject the JwtTokenUtil
 
     @Override
-    public Response<?> processPayment(PaymentRequest paymentRequest) {
-        // get teh row by bookingId
-        RoomBooking booking = roomBookingMapper.selectById(paymentRequest.getRoomBookingId());
+    public Response<?> processPayment(String authorizationHeader,PaymentRequest request) {
+        // extract Token，from Authorization header get Bearer Token
+        String token = extractTokenFromHeader(authorizationHeader);
+        // Parse the token to get user information
+        String username = jwtUtil.extractUsername(token);
 
-        if (booking != null && booking.getPaymentStatus().equals("UNPAID")) {
-            // Simulating Successful Payment Logic
-            boolean paymentSuccess = simulatePayment(paymentRequest);
-            if (paymentSuccess) {
+        String email = jwtUtil.extractEmail(token);
 
-                Date currentDate = new Date();
-                // save payment information to table room_booking_payments
-                RoomBookingPayment payment = new RoomBookingPayment();
-                payment.setRoomBookingId(paymentRequest.getRoomBookingId());
-                payment.setRoomPaymentAmount(paymentRequest.getRoomPaymentAmount());
-                payment.setPaymentMethod(paymentRequest.getPaymentMethod());
-                payment.setPaymentStatus("PAID");
-                payment.setPaymentDate(new SimpleDateFormat("yyyy-MM-dd HH:DD").format(currentDate));
-                roomBookingPaymentMapper.insert(payment);
-                // update room_booking payment status PAID
-                booking.setPaymentStatus("PAID");
-                roomBookingMapper.updateById(booking);
+        // Set the user information into the request
+        request.setUsername(username);
 
-                Long bookingId = booking.getId(); // get booking id
-                RoomBookingDetailsResponse bookingDetails = roomBookingMapper.getBookingDetailsById(bookingId);
-
-                return Response.success(bookingDetails)
-                        .setMessage("Booking confirmed with room grade: " + bookingDetails.getRoomGrade());
-            }
-        } else if (booking == null) {
-
-            return Response.success()
-                    .setMessage("Booking not found" );
-        } else {
-            return Response.error(500, "Booking has already been paid or expired. " );
-
-        }
-        return Response.error(500, "Booking has already been paid or expired. " );
+        request.setEmail(email);
+        return providerClient.payment(request);
     }
 
-    // 模拟支付成功
-    private boolean simulatePayment(PaymentRequest paymentRequest) {
-        // 模拟支付成功
-        return true;
+    private String extractTokenFromHeader(String authorizationHeader) {
+        // check Authorization wether  "Bearer "
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return authorizationHeader.substring(7);  // get  the char after "Bearer " ，that is Token
+        } else {
+            throw new IllegalArgumentException("Invalid Authorization header format.");
+        }
     }
 }

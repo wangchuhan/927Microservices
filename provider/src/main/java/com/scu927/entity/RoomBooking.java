@@ -16,6 +16,58 @@ public class RoomBooking {
     private String email;  // Email address
     private String roomGrade;  // Room grade
     private BigDecimal totalAmount;  // Total amount for the booking
+    private String username;  // user account
+
+    private String paymentStatus;  // user account
+
+    private String cancellationStatus;  // user account
+
+    private String cancellationReason;  // user account
+
+
+    private String paymentMethod;  // user account
+
+    public String getCancellationStatus() {
+        return cancellationStatus;
+    }
+
+    public void setCancellationStatus(String cancellationStatus) {
+        this.cancellationStatus = cancellationStatus;
+    }
+
+    public String getCancellationReason() {
+        return cancellationReason;
+    }
+
+    public void setCancellationReason(String cancellationReason) {
+        this.cancellationReason = cancellationReason;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
 
     public Long getId() {
         return id;

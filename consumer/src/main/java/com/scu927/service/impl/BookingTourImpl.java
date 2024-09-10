@@ -3,7 +3,7 @@ package com.scu927.service.impl;
 import com.scu927.client.ProviderClient;
 import com.scu927.common.Response;
 import com.scu927.config.JwtUtil;
-import com.scu927.controller.request.BookingTourRequest;
+import com.scu927.controller.request.TourBookingRequest;
 import com.scu927.service.IBookingTourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class BookingTourImpl implements IBookingTourService {
     private JwtUtil jwtUtil;  // Inject the JwtTokenUtil
 
     @Override
-    public Response<?> bookingTour(String authorizationHeader, BookingTourRequest request) {
+    public Response<?> bookingTour(String authorizationHeader, TourBookingRequest request) {
         // extract Token，from Authorization header get Bearer Token
         String token = extractTokenFromHeader(authorizationHeader);
         // Parse the token to get user information

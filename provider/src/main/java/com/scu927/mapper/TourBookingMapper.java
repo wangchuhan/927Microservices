@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
-public interface BookingMapper extends BaseMapper<Booking> {
+public interface TourBookingMapper extends BaseMapper<Booking> {
 
     @Select("SELECT SUM(quantity) FROM tour_booking WHERE scenic_spot_id = #{scenicSpotId} AND booking_date = #{bookingDate} AND time_slot = #{timeSlot}")
     Integer getBookedQuantity(@Param("scenicSpotId") Long scenicSpotId,

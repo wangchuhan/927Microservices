@@ -9,9 +9,13 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.security.PrivateKey;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,8 +24,13 @@ import java.util.Map;
 
 public class JwtUtil {
 
-    private String SECRET_KEY = "u8gfh9sebsj34rk5fgfui56ujp54fnvh";
-    SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+
+    private final String privateKey="weAXnlH9N59IXifWhAvwm/YWymNPUEKW3uQIp6CVI4k=";
+
+    //private String SECRET_KEY = "u8gfh9sebsj34rk5fgfui56ujp54fnvh";
+    //SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    SecretKey key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(privateKey));
+
 
     // 生成 JWT Token
     public String generateToken(User user) {
@@ -40,8 +49,8 @@ public class JwtUtil {
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))  // 10小时
-
-                .signWith(key)  // URL 安全编码
+              //  .signWith(SignatureAlgorithm.RS256, privateKey)  // 使用私钥签名
+               .signWith(key)  // URL 安全编码
                 .compact(); // 默认会生成 Base64 URL Safe 编码的 JWT
     }
 

@@ -3,6 +3,7 @@ package com.scu927.service.impl;
 import com.scu927.client.ProviderClient;
 import com.scu927.common.Response;
 import com.scu927.config.JwtUtil;
+import com.scu927.controller.request.CancelBookingRequest;
 import com.scu927.controller.request.RoomBookingRequest;
 import com.scu927.service.IRoomBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,22 @@ public class RoomBookingImpl implements IRoomBookingService {
         request.setPhoneNumber(phoneNumber);
         request.setEmail(email);
         return providerClient.roomBooking(request);
+    }
+
+    @Override
+    public Response<?> cancelBooking(String authorizationHeader, CancelBookingRequest request) {
+        // extract Token，from Authorization header get Bearer Token
+        String token = extractTokenFromHeader(authorizationHeader);
+        // Parse the token to get user information
+        String username = jwtUtil.extractUsername(token);
+
+        String email = jwtUtil.extractEmail(token);
+
+        // Set the user information into the request
+        request.setUsername(username);
+
+        request.setEmail(email);
+        return providerClient.cancelBooking(request);
     }
 
 
