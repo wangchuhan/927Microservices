@@ -6,13 +6,14 @@ package com.scu927.mapper;
  */
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.scu927.controller.response.BookingDetailsResponse;
-import com.scu927.entity.Booking;
+import com.scu927.entity.TourBooking;
+import com.scu927.entity.TourBooking;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
-public interface TourBookingMapper extends BaseMapper<Booking> {
+public interface TourBookingMapper extends BaseMapper<TourBooking> {
 
     @Select("SELECT SUM(quantity) FROM tour_booking WHERE scenic_spot_id = #{scenicSpotId} AND booking_date = #{bookingDate} AND time_slot = #{timeSlot}")
     Integer getBookedQuantity(@Param("scenicSpotId") Long scenicSpotId,

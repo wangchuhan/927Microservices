@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.scu927.common.Response;
 import com.scu927.controller.request.BookingRequest;
 
-import com.scu927.entity.Booking;
+import com.scu927.entity.TourBooking;
 
-public interface IBookingService extends IService<Booking> {
+public interface IBookingService extends IService<TourBooking> {
     Response<?> createBooking(BookingRequest bookingRequest);
 }

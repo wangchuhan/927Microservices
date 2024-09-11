@@ -7,6 +7,7 @@ import com.scu927.entity.RoomBooking;
 import com.scu927.entity.RoomBookingPayment;
 import com.scu927.mapper.RoomBookingMapper;
 import com.scu927.mapper.RoomBookingPaymentMapper;
+import com.scu927.producer.EmailMessageProducer;
 import com.scu927.service.IPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,9 @@ public class PaymentServiceImpl implements IPaymentService {
 
     @Autowired
     private RoomBookingPaymentMapper roomBookingPaymentMapper;
+
+    @Autowired
+    private EmailMessageProducer messageProducer;
 
     @Override
     public Response<?> processPayment(PaymentRequest paymentRequest) {
@@ -53,6 +57,9 @@ public class PaymentServiceImpl implements IPaymentService {
                 Long bookingId = booking.getId(); // get booking id
                 RoomBookingDetailsResponse bookingDetails = roomBookingMapper.getBookingDetailsById(bookingId);
                 String emailMessage=generateRoomPaymentSuccessEmail(booking,payment);
+
+                messageProducer.sendEmailMessage(emailMessage,"paymentReminderQueue");
+
                 return Response.success(bookingDetails)
                         .setMessage("Booking confirmed with room grade: " + bookingDetails.getRoomGrade());
             }

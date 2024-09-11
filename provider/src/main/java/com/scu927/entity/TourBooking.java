@@ -4,7 +4,7 @@ package com.scu927.entity;
  * @author Chuhan
  * @date 2024/9/8
  */
-    public class Booking {
+    public class TourBooking {
     private Long id;                // Unique identifier for the booking
     private Long scenicSpotId;       // ID of the scenic spot being booked
     private String username;         // Username of the user making the booking

@@ -10,6 +10,8 @@ spring:
       - name: scenicSpotQueue
       - name: roomBookingQueue
       - name: tableReservationQueue
+      - name: paymentReminderQueue
+      - name: roomCancelReminderQueue
 
 
 
@@ -25,8 +27,7 @@ spring:
           ssl:
             enable: true
 
-  jwt:
-    privateKey: weAXnlH9N59IXifWhAvwm/YWymNPUEKW3uQIp6CVI4k=
+
 
 
 

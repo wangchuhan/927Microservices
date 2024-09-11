@@ -8,7 +8,8 @@ import com.scu927.common.Response;
 import com.scu927.controller.request.BookingRequest;
 
 import com.scu927.controller.response.BookingDetailsResponse;
-import com.scu927.entity.Booking;
+import com.scu927.entity.TourBooking;
+import com.scu927.entity.TourBooking;
 import com.scu927.mapper.TourBookingMapper;
 import com.scu927.mapper.ScenicSpotMapper;
 import com.scu927.producer.EmailMessageProducer;
@@ -21,7 +22,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 
 @Service
-public class BookingServiceImpl extends ServiceImpl<TourBookingMapper, Booking> implements IBookingService {
+public class BookingServiceImpl extends ServiceImpl<TourBookingMapper, TourBooking> implements IBookingService {
 
     @Autowired
     private TourBookingMapper bookingMapper;
@@ -62,7 +63,7 @@ public class BookingServiceImpl extends ServiceImpl<TourBookingMapper, Booking> 
             }
 
             // Create a new Booking object
-            Booking booking = new Booking();
+            TourBooking booking = new TourBooking();
             booking.setScenicSpotId(scenicSpotId);
             booking.setUsername(username);
             booking.setEmail(email);

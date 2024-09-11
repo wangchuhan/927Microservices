@@ -4,23 +4,20 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.scu927.common.Response;
 import com.scu927.controller.request.CancelBookingRequest;
 import com.scu927.controller.request.RoomBookingRequest;
-import com.scu927.controller.response.BookingDetailsResponse;
 import com.scu927.controller.response.RoomBookingDetailsResponse;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-
-
 import com.scu927.entity.Room;
 import com.scu927.entity.RoomBooking;
 import com.scu927.mapper.RoomBookingMapper;
 import com.scu927.mapper.RoomMapper;
+import com.scu927.producer.EmailMessageProducer;
 import com.scu927.service.RoomBookingService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -35,8 +32,10 @@ public class RoomBookingServiceImpl extends ServiceImpl<RoomBookingMapper, RoomB
 
     @Autowired
     private RoomBookingMapper roomBookingMapper;
+
+
     @Autowired
-    private RabbitTemplate rabbitTemplate;
+    private EmailMessageProducer messageProducer;
 
     @Override
     public Response<?> processBooking(RoomBookingRequest request) {
@@ -70,7 +69,9 @@ public class RoomBookingServiceImpl extends ServiceImpl<RoomBookingMapper, RoomB
                 this.save(booking);
                 Long bookingId = booking.getId(); // get booking id
                 RoomBookingDetailsResponse bookingDetails = roomBookingMapper.getBookingDetailsById(bookingId);
-
+                //generate message then send email
+                String emailMessage = generateRoomBookingPaymentReminderEmail(bookingDetails);
+                messageProducer.sendEmailMessage(emailMessage,"roomBookingQueue");
 
 
 
@@ -121,6 +122,8 @@ public class RoomBookingServiceImpl extends ServiceImpl<RoomBookingMapper, RoomB
         booking.setCancellationReason(request.getCancellationReason());
         roomBookingMapper.updateById(booking);
         String emailMessage = generateRoomBookingCancellationEmail(booking);
+
+        messageProducer.sendEmailMessage(emailMessage,"roomCancelReminderQueue");
         return Response.success("Booking cancelled successfully.");
     }
 
@@ -159,6 +162,28 @@ public class RoomBookingServiceImpl extends ServiceImpl<RoomBookingMapper, RoomB
 
 
         message.append("We are sorry to see you cancel your booking. If you have any questions or need further assistance, please feel free to contact us.\n\n")
+                .append("Best regards,\n")
+                .append("The Room Booking Team");
+
+        return message.toString();
+    }
+
+    private String generateRoomBookingPaymentReminderEmail(RoomBookingDetailsResponse bookingDetails) {
+        StringBuilder message = new StringBuilder();
+
+        // Email header and greeting
+        message.append("Email: ").append(bookingDetails.getEmail()).append(";\n\n")
+                .append("Dear ").append(bookingDetails.getName()).append(",\n\n");
+
+        // Body: booking details and payment reminder
+        message.append("This is a reminder that your room booking is awaiting payment. Below are the details of your booking:\n\n")
+                .append("Booking ID: ").append(bookingDetails.getBookingId()).append("\n")
+                .append("Room Booking Date: ").append(bookingDetails.getBookingDate()).append("\n")
+                .append("Room Type: ").append(bookingDetails.getRoomGradeDetails()).append("\n")
+                .append("Total Amount Due: ").append(bookingDetails.getTotalAmount()).append("\n");
+
+        // Payment reminder closing message
+        message.append("\nPlease complete the payment to confirm your booking. If you need further assistance, feel free to contact us.\n\n")
                 .append("Best regards,\n")
                 .append("The Room Booking Team");
 

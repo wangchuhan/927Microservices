@@ -29,4 +29,10 @@ mail:
   username: your-email@example.com     # Replace with your email address
   password: your-email-password        # Replace with your email authorization code (not the login password) 
 
-#
+### 3. start project
+after starting  RabbitMQ you can start project
+1 run eureka-server/src/main/java/com/scu927/EurekaServerApplication.java
+
+2 run provider/src/main/java/com/scu927/ProviderApplication.java
+
+3 run consumer/src/main/java/com/scu927/ConsumerApplication.java

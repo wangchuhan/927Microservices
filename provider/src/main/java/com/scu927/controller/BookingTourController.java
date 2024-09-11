@@ -6,7 +6,6 @@ package com.scu927.controller;
  */
 import com.scu927.common.Response;
 import com.scu927.controller.request.BookingRequest;
-import com.scu927.entity.Booking;
 import com.scu927.service.IBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

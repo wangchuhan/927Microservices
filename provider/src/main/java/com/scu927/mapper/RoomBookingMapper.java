@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Select;
  */
 @Mapper
 public interface RoomBookingMapper extends BaseMapper<RoomBooking> {
-    // 使用 @Select 注解根据预定 ID 查询详细信息
+
     @Select("SELECT " +
             "rb.id AS bookingId, " +
             "rb.booking_date AS bookingDate, " +
