@@ -28,35 +28,35 @@ public class MessageConsumer {
     // Listen to the "scenicSpotQueue" queue
     @RabbitListener(queues = "scenicSpotQueue")
     public void receiveScenicSpotMessage(String message) {
-        processMessage(message);
+        processMessage(message,"ScenicSpot");
     }
 
     // 监听 "tableReservationQueue" 队列的消息
     // Listen to the "tableReservationQueue" queue
     @RabbitListener(queues = "tableReservationQueue")
     public void receiveTableReservationMessage(String message) {
-        processMessage(message);
+        processMessage(message,"tableReservation");
     }
 
     // 监听 "roomBookingQueue" 队列的消息
     // Listen to the "roomBookingQueue" queue
     @RabbitListener(queues = "roomBookingQueue")
     public void receiveRoomBookingMessage(String message) {
-        processMessage(message);
+        processMessage(message,"roomBooking");
     }
 
     // 监听 "paymentReminderQueue" 队列的消息
     // Listen to the "paymentReminderQueue" queue
     @RabbitListener(queues = "paymentReminderQueue")
     public void paymentReminderQueueMessage(String message) {
-        processMessage(message);
+        processMessage(message,"paymentReminder");
     }
 
     // 监听 "roomCancelReminderQueue" 队列的消息
     // Listen to the "roomCancelReminderQueue" queue
     @RabbitListener(queues = "roomCancelReminderQueue")
     public void roomCancelReminderMessage(String message) {
-        processMessage(message);
+        processMessage(message,"roomCancelReminder");
     }
 
     /**
@@ -65,17 +65,17 @@ public class MessageConsumer {
      *
      * @param message 收到的消息内容 / The message content received
      */
-    private void processMessage(String message) {
+    private void processMessage(String message,String messageType) {
         try {
             // 校验消息格式 / Validate the message format
             if (isValidMessageFormat(message)) {
                 // 解析邮件地址和预定信息 / Extract email and reservation info
                 String email = extractEmailFromMessage(message);
                 String reservationInfo = extractReservationInfo(message);
-
+                String subject = getEmailSubjectByMessageType(messageType);
                 // 验证邮件地址格式 / Validate email format
                 if (isValidEmail(email)) {
-                    sendEmailNotification(email, reservationInfo);
+                    sendEmailNotification(email, reservationInfo,subject);
                     System.out.println("Email sent to: " + email);
                 } else {
                     System.out.println("Invalid email format: " + email);
@@ -98,14 +98,37 @@ public class MessageConsumer {
      * @param toEmail 收件人邮箱 / Recipient's email
      * @param reservationInfo 预定信息 / Reservation info
      */
-    private void sendEmailNotification(String toEmail, String reservationInfo) {
+    private void sendEmailNotification(String toEmail, String reservationInfo,String subjectType) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(toEmail);
-        mailMessage.setSubject("Reservation Confirmation");
+        mailMessage.setSubject(subjectType);
         mailMessage.setText(reservationInfo);
         mailMessage.setFrom(mailAddress);
         mailSender.send(mailMessage);
         System.out.println("Email sent to: " + toEmail);
+    }
+
+    /**
+     * get subject from message type
+     *
+     * @param messageType 消息类型 / The type of message
+     * @return 邮件主题 / Email subject
+     */
+    private String getEmailSubjectByMessageType(String messageType) {
+        switch (messageType) {
+            case "scenicSpot":
+                return "Scenic Spot Booking Success";
+            case "tableReservation":
+                return "Table Reservation Success";
+            case "roomBooking":
+                return "Room Booking Success - Pending Payment";
+            case "paymentReminder":
+                return "Payment Success";
+            case "roomCancelReminder":
+                return "Room Cancellation Success";
+            default:
+                return "Reservation Notification";
+        }
     }
 
     /**

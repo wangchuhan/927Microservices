@@ -113,7 +113,8 @@ public class RoomBookingServiceImpl extends ServiceImpl<RoomBookingMapper, RoomB
 
         //Check whether the deadline is exceeded
         if (currentTime.isAfter(cancelDeadline)) {
-            return Response.error(500,"Booking not found");
+            return Response.error(500,"Sorry, " +
+                    "cancellations are not allowed after 12:00 PM on the reservation date.");
 
         }
 
