@@ -11,6 +11,6 @@ import com.scu927.controller.request.TableReservationRequest;
  */
 public interface ITableReservationService  {
 
-    Response<?> reserveTable( String authorizationHeader,TableReservationRequest request);
+    Response<?> reserveTable( TableReservationRequest request);
 
 }

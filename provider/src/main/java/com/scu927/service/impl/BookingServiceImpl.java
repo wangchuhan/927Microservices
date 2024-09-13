@@ -14,9 +14,9 @@ import com.scu927.mapper.ScenicSpotMapper;
 import com.scu927.mapper.TourBookingMapper;
 import com.scu927.producer.EmailMessageProducer;
 import com.scu927.service.IBookingService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 
 @Service
@@ -30,17 +30,19 @@ public class BookingServiceImpl extends ServiceImpl<TourBookingMapper, TourBooki
 
     @Autowired
     private EmailMessageProducer messageProducer;
+
     @Override
-    public Response<?> createBooking(BookingRequest request) {
+    public Response<?> createBooking(BookingRequest request, HttpServletRequest httpServletRequest) {
         try {
             Long scenicSpotId = request.getScenicSpotId();
-            String username = request.getUsername();
-            String email = request.getEmail();
+            String username = (String) httpServletRequest.getAttribute("name");
+            String email = (String) httpServletRequest.getAttribute("email");
+            String name = (String) httpServletRequest.getAttribute("name");
+            String phoneNumber = (String) httpServletRequest.getAttribute("phoneNumber");
             String bookingDate = request.getBookingDate();
             String timeSlot = request.getTimeSlot();
             int quantity = request.getQuantity();
-            String name =  request.getName();
-            String phoneNumber =  request.getPhoneNumber();
+
             // Retrieve the capacity of the scenic spot
             Integer capacity = scenicSpotMapper.getCapacityById(scenicSpotId);
             if (capacity == null) {
@@ -78,7 +80,7 @@ public class BookingServiceImpl extends ServiceImpl<TourBookingMapper, TourBooki
 
                 String emailMessage = generateBookingConfirmationEmail(bookingDetails);
                 // Send the message to the RabbitMQ queue
-                messageProducer.sendEmailMessage(emailMessage,"scenicSpotQueue");
+                messageProducer.sendEmailMessage(emailMessage, "scenicSpotQueue");
                 return Response.success(bookingDetails);  // Return success with the created booking
             } else {
                 // Return success with a custom message if the booking creation failed
@@ -86,11 +88,12 @@ public class BookingServiceImpl extends ServiceImpl<TourBookingMapper, TourBooki
             }
         } catch (Exception e) {
             // Log the error and return an error response for unexpected exceptions
-            return Response.error(500, "server error " );
+            return Response.error(500, "server error ");
         }
 
     }
-    private String generateBookingConfirmationEmail(BookingDetailsResponse bookingDetails){
+
+    private String generateBookingConfirmationEmail(BookingDetailsResponse bookingDetails) {
         StringBuilder message = new StringBuilder();
 
         message.append("Email: ").append(bookingDetails.getEmail()).append(";\n\n")

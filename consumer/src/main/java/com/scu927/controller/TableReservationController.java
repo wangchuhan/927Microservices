@@ -18,10 +18,10 @@ public class TableReservationController {
     @Autowired
     private ITableReservationService tableReservationService;
     @PostMapping("/reserve")
-    public Response<?> reserveTable( @RequestHeader("Authorization") String authorizationHeader,
+    public Response<?> reserveTable(
                                      @RequestBody TableReservationRequest request) {
 
 
-        return tableReservationService.reserveTable(authorizationHeader,request);
+        return tableReservationService.reserveTable(request);
     }
 }

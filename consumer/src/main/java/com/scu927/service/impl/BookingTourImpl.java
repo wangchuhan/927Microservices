@@ -24,20 +24,20 @@ public class BookingTourImpl implements IBookingTourService {
     private JwtUtil jwtUtil;  // Inject the JwtTokenUtil
 
     @Override
-    public Response<?> bookingTour(String authorizationHeader, TourBookingRequest request) {
-        // extract Token，from Authorization header get Bearer Token
-        String token = extractTokenFromHeader(authorizationHeader);
-        // Parse the token to get user information
-        String username = jwtUtil.extractUsername(token);
-        String name = jwtUtil.extractName(token);
-        String phoneNumber = jwtUtil.extractPhoneNumber(token);
-        String email = jwtUtil.extractEmail(token);
-
-        // Set the user information into the request
-        request.setUsername(username);
-        request.setName(name);
-        request.setPhoneNumber(phoneNumber);
-        request.setEmail(email);
+    public Response<?> bookingTour(TourBookingRequest request) {
+//        // extract Token，from Authorization header get Bearer Token
+//        String token = extractTokenFromHeader(authorizationHeader);
+//        // Parse the token to get user information
+//        String username = jwtUtil.extractUsername(token);
+//        String name = jwtUtil.extractName(token);
+//        String phoneNumber = jwtUtil.extractPhoneNumber(token);
+//        String email = jwtUtil.extractEmail(token);
+//
+//        // Set the user information into the request
+//        request.setUsername(username);
+//        request.setName(name);
+//        request.setPhoneNumber(phoneNumber);
+//        request.setEmail(email);
         return providerClient.bookingTour(request);
     }
 

@@ -10,7 +10,7 @@ import com.scu927.controller.request.PaymentRequest;
  */
 public interface IPaymentService {
 
-    Response<?> processPayment(String authorizationHeader,PaymentRequest paymentRequest);
+    Response<?> processPayment(PaymentRequest paymentRequest);
 
 
 }

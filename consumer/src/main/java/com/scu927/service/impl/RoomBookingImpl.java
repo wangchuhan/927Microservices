@@ -24,36 +24,36 @@ public class RoomBookingImpl implements IRoomBookingService {
 
 
     @Override
-    public Response<?> processBooking(String authorizationHeader, RoomBookingRequest request) {
-        // extract Token，from Authorization header get Bearer Token
-        String token = extractTokenFromHeader(authorizationHeader);
-        // Parse the token to get user information
-        String username = jwtUtil.extractUsername(token);
-        String name = jwtUtil.extractName(token);
-        String phoneNumber = jwtUtil.extractPhoneNumber(token);
-        String email = jwtUtil.extractEmail(token);
-
-        // Set the user information into the request
-        request.setUsername(username);
-        request.setName(name);
-        request.setPhoneNumber(phoneNumber);
-        request.setEmail(email);
+    public Response<?> processBooking( RoomBookingRequest request) {
+//        // extract Token，from Authorization header get Bearer Token
+//        String token = extractTokenFromHeader(authorizationHeader);
+//        // Parse the token to get user information
+//        String username = jwtUtil.extractUsername(token);
+//        String name = jwtUtil.extractName(token);
+//        String phoneNumber = jwtUtil.extractPhoneNumber(token);
+//        String email = jwtUtil.extractEmail(token);
+//
+//        // Set the user information into the request
+//        request.setUsername(username);
+//        request.setName(name);
+//        request.setPhoneNumber(phoneNumber);
+//        request.setEmail(email);
         return providerClient.roomBooking(request);
     }
 
     @Override
-    public Response<?> cancelBooking(String authorizationHeader, CancelBookingRequest request) {
-        // extract Token，from Authorization header get Bearer Token
-        String token = extractTokenFromHeader(authorizationHeader);
-        // Parse the token to get user information
-        String username = jwtUtil.extractUsername(token);
-
-        String email = jwtUtil.extractEmail(token);
-
-        // Set the user information into the request
-        request.setUsername(username);
-
-        request.setEmail(email);
+    public Response<?> cancelBooking( CancelBookingRequest request) {
+//        // extract Token，from Authorization header get Bearer Token
+//        String token = extractTokenFromHeader(authorizationHeader);
+//        // Parse the token to get user information
+//        String username = jwtUtil.extractUsername(token);
+//
+//        String email = jwtUtil.extractEmail(token);
+//
+//        // Set the user information into the request
+//        request.setUsername(username);
+//
+//        request.setEmail(email);
         return providerClient.cancelBooking(request);
     }
 

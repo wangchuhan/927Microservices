@@ -29,23 +29,23 @@ public class RoomBookingController {
 
 
     @PostMapping("/book")
-    public Response<?> bookingTour(@RequestHeader("Authorization") String authorizationHeader,
+    public Response<?> bookingTour(
                                     @RequestBody RoomBookingRequest request) {
 
 
-        return roomBookingService.processBooking(authorizationHeader,request);
+        return roomBookingService.processBooking(request);
     }
 
     @PostMapping("/payment")
-    public Response<?> payment(@RequestHeader("Authorization") String authorizationHeader,
+    public Response<?> payment(
                                @RequestBody PaymentRequest request) {
-        return paymentService.processPayment(authorizationHeader,request);
+        return paymentService.processPayment(request);
     }
 
 
     @PostMapping("/cancel")
-    public Response<?> cancelBooking(@RequestHeader("Authorization") String authorizationHeader,
+    public Response<?> cancelBooking(
                                      @RequestBody CancelBookingRequest request) {
-        return roomBookingService.cancelBooking(authorizationHeader,request);
+        return roomBookingService.cancelBooking(request);
     }
 }

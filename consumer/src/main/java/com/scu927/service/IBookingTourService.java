@@ -9,5 +9,5 @@ import com.scu927.controller.request.TourBookingRequest;
  */
 public interface IBookingTourService {
 
-    Response<?> bookingTour(String authorizationHeader, TourBookingRequest request);
+    Response<?> bookingTour(TourBookingRequest request);
 }

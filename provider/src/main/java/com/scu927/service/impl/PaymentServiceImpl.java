@@ -9,6 +9,7 @@ import com.scu927.mapper.RoomBookingMapper;
 import com.scu927.mapper.RoomBookingPaymentMapper;
 import com.scu927.producer.EmailMessageProducer;
 import com.scu927.service.IPaymentService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,12 @@ public class PaymentServiceImpl implements IPaymentService {
     private EmailMessageProducer messageProducer;
 
     @Override
-    public Response<?> processPayment(PaymentRequest paymentRequest) {
+    public Response<?> processPayment(PaymentRequest paymentRequest, HttpServletRequest httpServletRequest) {
+//        String name = (String) httpServletRequest.getAttribute("name");
+//        String username = (String) httpServletRequest.getAttribute("username");
+//        String email = (String) httpServletRequest.getAttribute("email");
+//        String phoneNumber = (String) httpServletRequest.getAttribute("phoneNumber");
+
         // get teh row by bookingId
         RoomBooking booking = roomBookingMapper.selectById(paymentRequest.getRoomBookingId());
 
@@ -84,7 +90,7 @@ public class PaymentServiceImpl implements IPaymentService {
         StringBuilder message = new StringBuilder();
 
         message.append("Email: ").append(booking.getEmail()).append(";\n\n")
-                .append("Dear ").append(booking.getUsername()).append(",\n\n")
+                .append("Dear ").append(booking.getName()).append(",\n\n")
                 .append("We are pleased to inform you that your payment for the room booking has been successfully processed. Below are the details of your payment and booking:\n\n")
                 .append("Booking ID: ").append(booking.getId()).append("\n")
                 .append("Room Booking Date: ").append(booking.getBookingDate()).append("\n")

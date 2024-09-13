@@ -7,6 +7,7 @@ package com.scu927.controller;
 import com.scu927.common.Response;
 import com.scu927.controller.request.BookingRequest;
 import com.scu927.service.IBookingService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +19,10 @@ public class BookingTourController {
     private IBookingService bookingService;
 
     @PostMapping("/create")
-    public Response<?> createBooking(@RequestBody BookingRequest bookingRequest) {
+    public Response<?> createBooking(@RequestBody BookingRequest bookingRequest, HttpServletRequest httpServletRequest) {
 
-       return bookingService.createBooking(bookingRequest);
+
+       return bookingService.createBooking(bookingRequest,httpServletRequest);
 
 
     }

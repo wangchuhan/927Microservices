@@ -25,18 +25,18 @@ public class PaymentServiceImpl implements IPaymentService {
     private JwtUtil jwtUtil;  // Inject the JwtTokenUtil
 
     @Override
-    public Response<?> processPayment(String authorizationHeader,PaymentRequest request) {
-        // extract Token，from Authorization header get Bearer Token
-        String token = extractTokenFromHeader(authorizationHeader);
-        // Parse the token to get user information
-        String username = jwtUtil.extractUsername(token);
-
-        String email = jwtUtil.extractEmail(token);
-
-        // Set the user information into the request
-        request.setUsername(username);
-
-        request.setEmail(email);
+    public Response<?> processPayment(PaymentRequest request) {
+//        // extract Token，from Authorization header get Bearer Token
+//        String token = extractTokenFromHeader(authorizationHeader);
+//        // Parse the token to get user information
+//        String username = jwtUtil.extractUsername(token);
+//
+//        String email = jwtUtil.extractEmail(token);
+//
+//        // Set the user information into the request
+//        request.setUsername(username);
+//
+//        request.setEmail(email);
         return providerClient.payment(request);
     }
 

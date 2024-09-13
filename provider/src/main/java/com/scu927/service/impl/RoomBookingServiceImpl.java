@@ -11,6 +11,7 @@ import com.scu927.mapper.RoomBookingMapper;
 import com.scu927.mapper.RoomMapper;
 import com.scu927.producer.EmailMessageProducer;
 import com.scu927.service.RoomBookingService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,9 +39,12 @@ public class RoomBookingServiceImpl extends ServiceImpl<RoomBookingMapper, RoomB
     private EmailMessageProducer messageProducer;
 
     @Override
-    public Response<?> processBooking(RoomBookingRequest request) {
+    public Response<?> processBooking(RoomBookingRequest request, HttpServletRequest httpServletRequest) {
         try {
-
+            String  name=(String) httpServletRequest.getAttribute("name");
+            String  username= (String)httpServletRequest.getAttribute("username");
+            String  email= (String)httpServletRequest.getAttribute("email");
+            String  phoneNumber=(String)httpServletRequest.getAttribute("phoneNumber");
 
             // Check if booking date format is valid (YYYY-MM-DD)
             if (!isValidDateFormat(request.getBookingDate())) {
@@ -52,13 +56,13 @@ public class RoomBookingServiceImpl extends ServiceImpl<RoomBookingMapper, RoomB
             if (!availableRooms.isEmpty()) {
                 Room selectedRoom = availableRooms.get(0);  // Select the first available room
                 RoomBooking booking = new RoomBooking();
-                booking.setUsername(request.getUsername());
+                booking.setUsername(username);
                 booking.setRoomId(selectedRoom.getId());
                 booking.setBookingDate(request.getBookingDate());
-                booking.setName(request.getName());
+                booking.setName(name);
                 booking.setHomeAddress(request.getHomeAddress());
-                booking.setPhoneNumber(request.getPhoneNumber());
-                booking.setEmail(request.getEmail());
+                booking.setPhoneNumber(phoneNumber);
+                booking.setEmail(email);
                 booking.setRoomGrade(request.getRoomGrade());
                 booking.setTotalAmount(selectedRoom.getPrice());
 
@@ -92,7 +96,7 @@ public class RoomBookingServiceImpl extends ServiceImpl<RoomBookingMapper, RoomB
 
 
     @Override
-    public Response<?> cancelBooking(CancelBookingRequest request) {
+    public Response<?> cancelBooking(CancelBookingRequest request, HttpServletRequest httpServletRequest) {
         // 获取预定信息
         RoomBooking booking = roomBookingMapper.selectById(request.getId());
 
@@ -102,7 +106,10 @@ public class RoomBookingServiceImpl extends ServiceImpl<RoomBookingMapper, RoomB
         if (booking.getCancellationStatus().equals("CANCELLED")) {
             return Response.success().setMessage("The booking has been canceled" );
         }
-
+//        String  name=(String) httpServletRequest.getAttribute("name");
+//        String  username= (String)httpServletRequest.getAttribute("username");
+//        String  email= (String)httpServletRequest.getAttribute("email");
+//        String  phoneNumber=(String)httpServletRequest.getAttribute("phoneNumber");
 
         // get booking date
         LocalDate bookingDate = LocalDate.parse(booking.getBookingDate());

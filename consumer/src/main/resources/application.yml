@@ -14,12 +14,11 @@ spring:
       - name: roomCancelReminderQueue
 
 
-
   mail:
     host: smtp.163.com
     port: 465
     username: wangchuhan163@163.com  # Replace with your email address
-    password:                # Replace with your email authorization code (not the login password)
+    password:        # Replace with your email authorization code (not the login password)
     properties:
       mail:
         smtp:
@@ -57,6 +56,11 @@ mybatis-plus:
 logging:
   level:
     org.springframework.security: DEBUG
+
+feign:
+  hystrix:
+    enabled: false
+
 
 
 

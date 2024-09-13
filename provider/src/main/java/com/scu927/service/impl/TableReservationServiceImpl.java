@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.scu927.common.Response;
 import com.scu927.controller.request.TableReservationRequest;
 import com.scu927.controller.response.ReservationDetailsResponse;
+import com.scu927.controller.response.RoomBookingDetailsResponse;
 import com.scu927.controller.response.TableRecommendationResponse;
 import com.scu927.entity.Table;
 import com.scu927.entity.TableReservation;
@@ -11,6 +12,7 @@ import com.scu927.mapper.TableMapper;
 import com.scu927.mapper.TableReservationMapper;
 import com.scu927.producer.EmailMessageProducer;
 import com.scu927.service.TableReservationService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,23 +47,31 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
     private EmailMessageProducer messageProducer;
 
     @Override
-    public Response<?> reserveTable(TableReservationRequest request) {
+    public Response<?> reserveTable(TableReservationRequest request, HttpServletRequest httpServletRequest) {
         try {
             // Validate non-null parameters
             if (request == null) {
                 return Response.error(400, "Request cannot be null");
             }
 
+
             Long restaurantCafeId = request.getRestaurantCafeId();
             String reservationDate = request.getReservationDate();
             String timeSlot = request.getTimeSlot();
             int quantity = request.getQuantity();
-            String username = request.getUsername();
-            String email = request.getEmail();
-            String name = request.getName();
-            String phoneNumber = request.getPhoneNumber();
+//            String username = request.getUsername();
+//            String email = request.getEmail();
+//            String name = request.getName();
+//            String phoneNumber = request.getPhoneNumber();
+            String name = (String) httpServletRequest.getAttribute("name");
+            String username = (String) httpServletRequest.getAttribute("username");
+            String email = (String) httpServletRequest.getAttribute("email");
+            String phoneNumber = (String) httpServletRequest.getAttribute("phoneNumber");
 
-
+            // check the user data in token
+            if (isEmpty(username)|| isEmpty(email)) {
+                return Response.error(400, "Missing mail or username attributes in the request");
+            }
             // Check for null or empty parameters
             if (restaurantCafeId == null || isEmpty(reservationDate) || isEmpty(timeSlot) ||
                     isEmpty(username) || isEmpty(email) || isEmpty(name) || isEmpty(phoneNumber)) {
@@ -82,7 +92,6 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
                 String[] alternativeSlots = suggestNearestTimeSlots(timeSlot);
                 return Response.error(400, "Invalid time slot. Try " + alternativeSlots[0] + " or " + alternativeSlots[1]);
             }
-
 
 
             // Find available tables matching the criteria
@@ -106,13 +115,9 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
                 ReservationDetailsResponse reservationDetails =
                         tableMapper.getReservationDetails(reservation.getId());
                 // Construct a message containing email and reservation info
-//                String message = String.format("Email: %s; Reservation: %s for %d people on %s at %s",
-//                        request.getEmail(), request.getRestaurantCafeId(),
-//                        request.getQuantity(), request.getReservationDate(),
-//                        request.getTimeSlot());
                 StringBuilder message = new StringBuilder();
-                message.append("Email: ").append(request.getEmail()).append(";\n\n")
-                        .append("Dear ").append(request.getName()).append(",\n\n")
+                message.append("Email: ").append(email).append(";\n\n")
+                        .append("Dear ").append(name).append(",\n\n")
                         .append("Thank you for choosing our service! We are pleased to confirm that your reservation has been successfully made. Here are the details of your reservation:\n\n")
                         .append("Reservation Number: ").append(reservation.getId()).append("\n")
                         .append("Restaurant/Café: ").append(reservationDetails.getRestaurantName()).append("\n")
@@ -125,11 +130,9 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
                         .append("We look forward to welcoming you on ").append(request.getReservationDate()).append(". If you have any questions or need further assistance, please feel free to contact us.\n\n")
                         .append("Best regards,\n")
                         .append("The Restaurant Team");
-
-              String finalMessage = message.toString();
-
+                String finalMessage = message.toString();
                 // Send the message to the RabbitMQ queue
-                messageProducer.sendEmailMessage(finalMessage,"tableReservationQueue");
+                messageProducer.sendEmailMessage(finalMessage, "tableReservationQueue");
                 return Response.success(reservation).setMessage("Reservation confirmed!");
             } else {
                 // If no tables are available, find alternative time slots
@@ -146,7 +149,6 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
             return Response.error(500, "An error occurred while processing your reservation: " + e.getMessage());
         }
     }
-
 
 
 
@@ -168,7 +170,6 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
         long differenceInMinutes = (end.getTime() - start.getTime()) / (1000 * 60);  // Convert milliseconds to minutes
         return differenceInMinutes <= 120;  // Limit the duration to 2 hours (120 minutes)
     }
-
 
 
     // Helper method to check if the time slot matches the fixed 2-hour intervals

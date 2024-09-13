@@ -20,10 +20,10 @@ public class BookingTourController {
     private IBookingTourService bookingTourService;
 
     @PostMapping("/create")
-    public Response<?> bookingTour(@RequestHeader("Authorization") String authorizationHeader,
+    public Response<?> bookingTour(
                                     @RequestBody TourBookingRequest request) {
 
 
-        return bookingTourService.bookingTour(authorizationHeader,request);
+        return bookingTourService.bookingTour(request);
     }
 }

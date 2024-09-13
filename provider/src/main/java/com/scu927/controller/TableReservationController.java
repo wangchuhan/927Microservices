@@ -4,6 +4,7 @@ import com.scu927.common.Response;
 import com.scu927.controller.request.TableReservationRequest;
 
 import com.scu927.service.TableReservationService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 /**
@@ -18,7 +19,7 @@ public class TableReservationController {
     private TableReservationService tableReservationService;
 
     @PostMapping("/reserve")
-    public Response<?> reserveTable(@RequestBody TableReservationRequest request) {
-        return tableReservationService.reserveTable(request);
+    public Response<?> reserveTable(@RequestBody TableReservationRequest request, HttpServletRequest httpServletRequest) {
+        return tableReservationService.reserveTable(request,httpServletRequest);
     }
 }

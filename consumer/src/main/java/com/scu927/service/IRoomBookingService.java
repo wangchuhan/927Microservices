@@ -11,7 +11,7 @@ import com.scu927.controller.request.RoomBookingRequest;
  */
 public interface IRoomBookingService {
 
-    Response<?> processBooking(String authorizationHeader, RoomBookingRequest request);
+    Response<?> processBooking(RoomBookingRequest request);
 
-    Response<?> cancelBooking(String authorizationHeader, CancelBookingRequest request);
+    Response<?> cancelBooking(CancelBookingRequest request);
 }
