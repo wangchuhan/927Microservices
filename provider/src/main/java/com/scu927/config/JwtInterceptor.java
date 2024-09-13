@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class JwtInterceptor implements HandlerInterceptor {
 
-    private final JwtUtil jwtUtil;  // 注入你的 JWT 工具类
+    private final JwtUtil jwtUtil;
 
     public JwtInterceptor(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
@@ -43,7 +43,6 @@ public class JwtInterceptor implements HandlerInterceptor {
                 phoneNumber= jwtUtil.extractPhoneNumber(token);
             }
 
-            // 将解析后的用户名和邮箱放入请求属性中，不再修改请求体
             request.setAttribute("username", username);
             request.setAttribute("email", email);
             request.setAttribute("name", name);

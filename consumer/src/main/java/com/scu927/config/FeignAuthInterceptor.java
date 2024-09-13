@@ -27,7 +27,7 @@ public class FeignAuthInterceptor implements RequestInterceptor {
             String authorizationHeader = request.getHeader("Authorization");
 
             if (authorizationHeader != null) {
-                // 将 Authorization header 添加到 Feign 请求中
+                // take Authorization header into Feign request
                 requestTemplate.header("Authorization", authorizationHeader);
             }
         }

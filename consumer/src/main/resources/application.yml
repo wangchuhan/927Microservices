@@ -26,10 +26,6 @@ spring:
           ssl:
             enable: true
 
-
-
-
-
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/consumer_db?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
     username: root
@@ -37,17 +33,14 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 server:
-  port: 8082  # consumer 服务运行的端口
+  port: 8082  # consumer server port
 
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka/  # 指向 Eureka Server 的地址
+      defaultZone: http://127.0.0.1:8761/eureka/  #  Eureka Server address
   instance:
-    prefer-ip-address: true  # 注册时使用 IP 地址
-
-
-
+    prefer-ip-address: true  # use IP address
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml

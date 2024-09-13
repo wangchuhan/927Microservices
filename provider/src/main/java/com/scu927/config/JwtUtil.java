@@ -19,25 +19,12 @@ import java.util.Map;
 @Component
 
 public class JwtUtil {
-
-
     private final String privateKey="weAXnlH9N59IXifWhAvwm/YWymNPUEKW3uQIp6CVI4k=";
 
-    //private String SECRET_KEY = "u8gfh9sebsj34rk5fgfui56ujp54fnvh";
-    //SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     SecretKey key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(privateKey));
 
 
-    // 生成 JWT Token
-    public String generateToken(User user) {
 
-        Map<String, Object> claims = new HashMap<>();
-
-        claims.put("name", user.getName());
-        claims.put("phoneNumber", user.getPhoneNumber());
-        claims.put("email", user.getEmail());
-        return createToken(claims, user.getUsername());
-    }
 
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
