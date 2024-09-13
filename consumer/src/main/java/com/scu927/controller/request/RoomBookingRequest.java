@@ -5,39 +5,13 @@ package com.scu927.controller.request;
  * @date 2024/9/8
  */
 public class RoomBookingRequest {
-    private String name;  // Guest name
+
     private String homeAddress;  // Home address
     private String contactNumber;  // Contact number
     private String email;  // Email address
     private String bookingDate;  // Booking date
     private String roomGrade;  // Room grade (Standard, Deluxe, Suite)
 
-    private String username;     // User's id
-    private String phoneNumber;     // User's contact number
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getHomeAddress() {
         return homeAddress;

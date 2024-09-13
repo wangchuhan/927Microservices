@@ -7,7 +7,8 @@ public class Response<T> {
     private T data;  // Entity object
 
     // Constructors
-    public Response() {}
+    public Response() {
+    }
 
     public Response(int code, String message, T data) {
         this.code = code;

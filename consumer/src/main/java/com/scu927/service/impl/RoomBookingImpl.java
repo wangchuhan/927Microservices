@@ -19,52 +19,17 @@ public class RoomBookingImpl implements IRoomBookingService {
     @Autowired
     private ProviderClient providerClient;
 
-    @Autowired
-    private JwtUtil jwtUtil;  // Inject the JwtTokenUtil
-
 
     @Override
-    public Response<?> processBooking( RoomBookingRequest request) {
-//        // extract Token，from Authorization header get Bearer Token
-//        String token = extractTokenFromHeader(authorizationHeader);
-//        // Parse the token to get user information
-//        String username = jwtUtil.extractUsername(token);
-//        String name = jwtUtil.extractName(token);
-//        String phoneNumber = jwtUtil.extractPhoneNumber(token);
-//        String email = jwtUtil.extractEmail(token);
-//
-//        // Set the user information into the request
-//        request.setUsername(username);
-//        request.setName(name);
-//        request.setPhoneNumber(phoneNumber);
-//        request.setEmail(email);
+    public Response<?> processBooking(RoomBookingRequest request) {
+
         return providerClient.roomBooking(request);
     }
 
     @Override
-    public Response<?> cancelBooking( CancelBookingRequest request) {
-//        // extract Token，from Authorization header get Bearer Token
-//        String token = extractTokenFromHeader(authorizationHeader);
-//        // Parse the token to get user information
-//        String username = jwtUtil.extractUsername(token);
-//
-//        String email = jwtUtil.extractEmail(token);
-//
-//        // Set the user information into the request
-//        request.setUsername(username);
-//
-//        request.setEmail(email);
+    public Response<?> cancelBooking(CancelBookingRequest request) {
         return providerClient.cancelBooking(request);
     }
 
 
-    // from Authorization header get JWT Token
-    private String extractTokenFromHeader(String authorizationHeader) {
-        // 检查 Authorization 头部是否以 "Bearer " 开头
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            return authorizationHeader.substring(7);  // 提取 "Bearer " 之后的部分，即真正的 Token
-        } else {
-            throw new IllegalArgumentException("Invalid Authorization header format.");
-        }
-    }
 }

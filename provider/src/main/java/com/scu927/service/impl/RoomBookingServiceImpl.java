@@ -106,10 +106,6 @@ public class RoomBookingServiceImpl extends ServiceImpl<RoomBookingMapper, RoomB
         if (booking.getCancellationStatus().equals("CANCELLED")) {
             return Response.success().setMessage("The booking has been canceled" );
         }
-//        String  name=(String) httpServletRequest.getAttribute("name");
-//        String  username= (String)httpServletRequest.getAttribute("username");
-//        String  email= (String)httpServletRequest.getAttribute("email");
-//        String  phoneNumber=(String)httpServletRequest.getAttribute("phoneNumber");
 
         // get booking date
         LocalDate bookingDate = LocalDate.parse(booking.getBookingDate());

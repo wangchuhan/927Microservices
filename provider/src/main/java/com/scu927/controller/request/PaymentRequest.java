@@ -20,18 +20,8 @@ public class PaymentRequest {
     private String paymentMethod;
 
 
-    @NotNull(message = "email cannot be null")
-    private String email;
 
 
-    // Getters and Setters
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
     public String getUsername() {
         return username;
     }

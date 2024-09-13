@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.scu927.common.Response;
 import com.scu927.controller.request.TableReservationRequest;
 import com.scu927.controller.response.ReservationDetailsResponse;
-import com.scu927.controller.response.RoomBookingDetailsResponse;
 import com.scu927.controller.response.TableRecommendationResponse;
 import com.scu927.entity.Table;
 import com.scu927.entity.TableReservation;
@@ -54,22 +53,17 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
                 return Response.error(400, "Request cannot be null");
             }
 
-
             Long restaurantCafeId = request.getRestaurantCafeId();
             String reservationDate = request.getReservationDate();
             String timeSlot = request.getTimeSlot();
             int quantity = request.getQuantity();
-//            String username = request.getUsername();
-//            String email = request.getEmail();
-//            String name = request.getName();
-//            String phoneNumber = request.getPhoneNumber();
             String name = (String) httpServletRequest.getAttribute("name");
             String username = (String) httpServletRequest.getAttribute("username");
             String email = (String) httpServletRequest.getAttribute("email");
             String phoneNumber = (String) httpServletRequest.getAttribute("phoneNumber");
 
             // check the user data in token
-            if (isEmpty(username)|| isEmpty(email)) {
+            if (isEmpty(username) || isEmpty(email)) {
                 return Response.error(400, "Missing mail or username attributes in the request");
             }
             // Check for null or empty parameters
@@ -149,7 +143,6 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
             return Response.error(500, "An error occurred while processing your reservation: " + e.getMessage());
         }
     }
-
 
 
     // Helper methods to validate time

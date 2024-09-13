@@ -34,10 +34,6 @@ public class PaymentServiceImpl implements IPaymentService {
 
     @Override
     public Response<?> processPayment(PaymentRequest paymentRequest, HttpServletRequest httpServletRequest) {
-//        String name = (String) httpServletRequest.getAttribute("name");
-//        String username = (String) httpServletRequest.getAttribute("username");
-//        String email = (String) httpServletRequest.getAttribute("email");
-//        String phoneNumber = (String) httpServletRequest.getAttribute("phoneNumber");
 
         // get teh row by bookingId
         RoomBooking booking = roomBookingMapper.selectById(paymentRequest.getRoomBookingId());

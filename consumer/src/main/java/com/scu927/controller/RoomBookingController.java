@@ -7,13 +7,14 @@ import com.scu927.controller.request.RoomBookingRequest;
 import com.scu927.service.IPaymentService;
 import com.scu927.service.IRoomBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Chuhan
  * @date 2024/9/9
- *
- *
  */
 @RestController
 @RequestMapping("/api/room-bookings")
@@ -26,11 +27,9 @@ public class RoomBookingController {
     private IPaymentService paymentService;
 
 
-
-
     @PostMapping("/book")
     public Response<?> bookingTour(
-                                    @RequestBody RoomBookingRequest request) {
+            @RequestBody RoomBookingRequest request) {
 
 
         return roomBookingService.processBooking(request);
@@ -38,14 +37,14 @@ public class RoomBookingController {
 
     @PostMapping("/payment")
     public Response<?> payment(
-                               @RequestBody PaymentRequest request) {
+            @RequestBody PaymentRequest request) {
         return paymentService.processPayment(request);
     }
 
 
     @PostMapping("/cancel")
     public Response<?> cancelBooking(
-                                     @RequestBody CancelBookingRequest request) {
+            @RequestBody CancelBookingRequest request) {
         return roomBookingService.cancelBooking(request);
     }
 }

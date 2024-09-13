@@ -4,7 +4,6 @@ import com.scu927.common.Response;
 import com.scu927.controller.request.CancelBookingRequest;
 import com.scu927.controller.request.PaymentRequest;
 import com.scu927.controller.request.RoomBookingRequest;
-
 import com.scu927.service.IPaymentService;
 import com.scu927.service.RoomBookingService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,7 +41,7 @@ public class RoomBookingController {
 
 
     @PostMapping("/cancel")
-    public Response<?> cancelBooking(@RequestBody CancelBookingRequest request ,HttpServletRequest httpServletRequest) {
+    public Response<?> cancelBooking(@RequestBody CancelBookingRequest request, HttpServletRequest httpServletRequest) {
         return roomBookingService.cancelBooking(request,httpServletRequest);
     }
 
