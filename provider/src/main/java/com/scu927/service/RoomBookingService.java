@@ -14,4 +14,6 @@ public interface RoomBookingService {
     Response<?> processBooking(RoomBookingRequest request, HttpServletRequest httpServletRequest);
 
     Response<?> cancelBooking(CancelBookingRequest request, HttpServletRequest httpServletRequest);
+
+    Response<?> cancelAllExpiredBooking();
 }

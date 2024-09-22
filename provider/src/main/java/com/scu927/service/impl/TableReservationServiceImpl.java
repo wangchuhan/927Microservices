@@ -61,7 +61,6 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
             String username = (String) httpServletRequest.getAttribute("username");
             String email = (String) httpServletRequest.getAttribute("email");
             String phoneNumber = (String) httpServletRequest.getAttribute("phoneNumber");
-
             // check the user data in token
             if (isEmpty(username) || isEmpty(email)) {
                 return Response.error(400, "Missing mail or username attributes in the request");
@@ -71,23 +70,18 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
                     isEmpty(username) || isEmpty(email) || isEmpty(name) || isEmpty(phoneNumber)) {
                 return Response.error(400, "All fields must be filled out and non-empty");
             }
-
             if (quantity <= 0) {
                 return Response.error(400, "Quantity must be greater than 0");
             }
-
             // Validate the timeSlot format (HH:MM-HH:MM)
             if (!isValidTimeSlotFormat(timeSlot)) {
                 return Response.error(400, "Invalid time slot format. Expected format: HH:MM-HH:MM");
             }
-
             // Validate timeSlot is one of the fixed time intervals (e.g., 08:00-10:00)
             if (!isFixedTimeSlot(timeSlot)) {
                 String[] alternativeSlots = suggestNearestTimeSlots(timeSlot);
                 return Response.error(400, "Invalid time slot. Try " + alternativeSlots[0] + " or " + alternativeSlots[1]);
             }
-
-
             // Find available tables matching the criteria
             List<Table> availableTables = tableMapper.findAvailableTables(restaurantCafeId, reservationDate, timeSlot, quantity);
             if (!availableTables.isEmpty()) {
@@ -102,7 +96,6 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
                 reservation.setEmail(email);
                 reservation.setName(name);
                 reservation.setPhoneNumber(phoneNumber);
-
                 // Save reservation using MyBatis-Plus
                 this.save(reservation);
                 // when success booking,get reservation's details

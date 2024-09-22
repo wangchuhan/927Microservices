@@ -5,6 +5,7 @@ import com.scu927.controller.response.RoomBookingDetailsResponse;
 import com.scu927.entity.RoomBooking;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * @author Chuhan
@@ -30,4 +31,10 @@ public interface RoomBookingMapper extends BaseMapper<RoomBooking> {
             "LEFT JOIN rooms r ON rb.room_id = r.id " +
             "WHERE rb.id = #{bookingId}")
     RoomBookingDetailsResponse getBookingDetailsById(Long bookingId);
+
+
+    @Update("UPDATE room_booking SET cancellation_status = 'CANCELLED' " +
+            "WHERE payment_status = 'UNPAID' AND cancellation_status = 'NOT_CANCELLED' " +
+            "AND TIMESTAMPDIFF(MINUTE, updated_at, NOW()) > 30")
+    int cancelExpiredBookings();
 }

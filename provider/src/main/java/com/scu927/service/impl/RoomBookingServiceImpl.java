@@ -65,10 +65,7 @@ public class RoomBookingServiceImpl extends ServiceImpl<RoomBookingMapper, RoomB
                 booking.setEmail(email);
                 booking.setRoomGrade(request.getRoomGrade());
                 booking.setTotalAmount(selectedRoom.getPrice());
-
                 booking.setPaymentStatus("UNPAID");
-
-
                 // Save booking
                 this.save(booking);
                 Long bookingId = booking.getId(); // get booking id
@@ -129,6 +126,14 @@ public class RoomBookingServiceImpl extends ServiceImpl<RoomBookingMapper, RoomB
 
         messageProducer.sendEmailMessage(emailMessage,"roomCancelReminderQueue");
         return Response.success("Booking cancelled successfully.");
+    }
+
+    @Override
+    public Response<?> cancelAllExpiredBooking() {
+        int affectedRows = roomBookingMapper.cancelExpiredBookings();
+
+            return Response.success("Successfully cancelled " + affectedRows + " expired bookings.");
+
     }
 
 

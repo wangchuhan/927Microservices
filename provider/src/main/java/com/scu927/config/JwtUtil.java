@@ -20,39 +20,32 @@ import java.util.Map;
 
 public class JwtUtil {
     private final String privateKey="weAXnlH9N59IXifWhAvwm/YWymNPUEKW3uQIp6CVI4k=";
-
     SecretKey key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(privateKey));
-
-
-
-
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))  // 10小时
-              //  .signWith(SignatureAlgorithm.RS256, privateKey)  // 使用私钥签名
-               .signWith(key)  // URL 安全编码
-                .compact(); // 默认会生成 Base64 URL Safe 编码的 JWT
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))  // 10hours
+              //  .signWith(SignatureAlgorithm.RS256, privateKey)  // use private sign
+               .signWith(key)  // URL safe code
+                .compact(); // generate Base64 URL Safe  JWT
     }
 
-    // 从 JWT Token 中解析出用户名
+    // from JWT Token get username
     public String extractUsername(String token) {
         return extractAllClaims(token).getSubject();
     }
 
-
-
-    // 解析所有的声明（claims）
+    // get all field from token（claims）
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(key)
                 .parseClaimsJws(token)
-                .getBody(); // 解析的时候也会自动处理 URL Safe Base64 编码
+                .getBody(); // dealing with URL Safe Base64 while parsing
     }
 
-    // 验证 JWT Token
+    //validate JWT Token
     public boolean validateToken(String token, String username) {
         String extractedUsername = extractUsername(token);
         return (extractedUsername.equals(username) && !isTokenExpired(token));
