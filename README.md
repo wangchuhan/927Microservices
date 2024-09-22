@@ -33,7 +33,8 @@ mail:
 1.Create Databases and Users
   Create the provider_db and consumer_db databases as per the configurations in the application.yml file.
   Create a database user and assign appropriate permissions for both databases.
-  DDl:-- 创建 provider_db 数据库
+  DDl:
+     -- 创建 provider_db 数据库
      -- Create the provider_db database
        CREATE DATABASE provider_db;
 
@@ -41,7 +42,7 @@ mail:
      -- Create the consumer_db database
      CREATE DATABASE consumer_db;
 
-    -- 创建用户并为两个数据库赋予权限
+     -- 创建用户并为两个数据库赋予权限
     -- Create a user and assign permissions for both databases
      CREATE USER 'your_db_user'@'localhost' IDENTIFIED BY 'your_db_password';
 
