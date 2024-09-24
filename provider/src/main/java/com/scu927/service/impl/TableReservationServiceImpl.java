@@ -2,6 +2,8 @@ package com.scu927.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.scu927.common.Response;
+import com.scu927.common.SimpleTaskScheduler;
+
 import com.scu927.controller.request.TableReservationRequest;
 import com.scu927.controller.response.ReservationDetailsResponse;
 import com.scu927.controller.response.TableRecommendationResponse;
@@ -9,9 +11,12 @@ import com.scu927.entity.Table;
 import com.scu927.entity.TableReservation;
 import com.scu927.mapper.TableMapper;
 import com.scu927.mapper.TableReservationMapper;
+import com.scu927.mock.Utils;
 import com.scu927.producer.EmailMessageProducer;
 import com.scu927.service.TableReservationService;
 import jakarta.servlet.http.HttpServletRequest;
+
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +27,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import org.slf4j.Logger;
+
+
 
 
 /**
@@ -45,11 +53,35 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
     @Autowired
     private EmailMessageProducer messageProducer;
 
+
+    private static final Logger logger = LoggerFactory.getLogger(SimpleTaskScheduler.class);
+
+
+
+
+
     @Override
-    public Response<?> reserveTable(TableReservationRequest request, HttpServletRequest httpServletRequest) {
+    public Response<?> reserveTable(TableReservationRequest request, HttpServletRequest httpServletRequest)  {
+
+//        String caseId = Utils.generateUniqueCaseId();
+//        String startReceiveRequest = Utils.getCurrentTimestamp();
+//        try {
+//            Thread.sleep(150);  // 模拟处理
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        String completeReceiveRequest = Utils.getCurrentTimestamp();
+//        // 记录开始预定
+//        Utils.writeLogToCSV(caseId, startReceiveRequest,
+//                completeReceiveRequest,
+//                  "Receive Request",
+//                "API Gateway", "");
+//
+//        String startCheckRequest = Utils.getCurrentTimestamp();
         try {
             // Validate non-null parameters
             if (request == null) {
+
                 return Response.error(400, "Request cannot be null");
             }
 
@@ -82,8 +114,25 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
                 String[] alternativeSlots = suggestNearestTimeSlots(timeSlot);
                 return Response.error(400, "Invalid time slot. Try " + alternativeSlots[0] + " or " + alternativeSlots[1]);
             }
+//            String completeCheckRequest = Utils.getCurrentTimestamp();
+//
+//
+//            Utils.writeLogToCSV(caseId, startCheckRequest,
+//                    completeCheckRequest,
+//                    "Check Request",
+//                    "Request Validator", "Customer");
+//
+//            String startQueryDatabase = Utils.getCurrentTimestamp();
             // Find available tables matching the criteria
             List<Table> availableTables = tableMapper.findAvailableTables(restaurantCafeId, reservationDate, timeSlot, quantity);
+
+//            String completeQueryDatabase = Utils.getCurrentTimestamp();
+//            Utils.writeLogToCSV(caseId, startQueryDatabase,
+//                    completeQueryDatabase,
+//                    "Query DataBase",
+//                    "Database Service", "Customer");
+//
+//            String startSavingBooking = Utils.getCurrentTimestamp();
             if (!availableTables.isEmpty()) {
                 // Create a new reservation
                 Table selectedTable = availableTables.get(0);  // Choose the first available table
@@ -98,6 +147,16 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
                 reservation.setPhoneNumber(phoneNumber);
                 // Save reservation using MyBatis-Plus
                 this.save(reservation);
+
+//                String completeSavingBooking = Utils.getCurrentTimestamp();
+//
+//                Utils.writeLogToCSV(caseId, startSavingBooking,
+//                        completeSavingBooking,
+//                        "Saving Booking",
+//                        "Booking Service", "Customer");
+//
+//                String startSendMessageToMq = Utils.getCurrentTimestamp();
+
                 // when success booking,get reservation's details
                 ReservationDetailsResponse reservationDetails =
                         tableMapper.getReservationDetails(reservation.getId());
@@ -119,7 +178,15 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
                         .append("The Restaurant Team");
                 String finalMessage = message.toString();
                 // Send the message to the RabbitMQ queue
-                messageProducer.sendEmailMessage(finalMessage, "tableReservationQueue");
+              messageProducer.sendEmailMessage(finalMessage, "tableReservationQueue");
+//                Thread.sleep(150);  // 模拟处理
+//                String completeSendMessageToMq = Utils.getCurrentTimestamp();
+//
+//                Utils.writeLogToCSV(caseId, startSendMessageToMq,
+//                        completeSendMessageToMq,
+//                        "Send Message to MQ",
+//                        "MQ Service", "Customer");
+
                 return Response.success(reservation).setMessage("Reservation confirmed!");
             } else {
                 // If no tables are available, find alternative time slots
