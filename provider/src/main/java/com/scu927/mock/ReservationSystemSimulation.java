@@ -15,7 +15,7 @@ public class ReservationSystemSimulation {
         int failedParameterRequests = 10;   // 失败类型 2: 参数不合法
         int timeSlotFailedRequests = 10;    // 失败类型 3: 返回可用时间段
         int dbConnectionFailedRequests = 10;// 失败类型 4: 数据库连接失败
-        int mqFailedRequests =10;           // 失败类型 5: RabbitMQ 服务不可用
+        int mqFailedRequests = 10;           // 失败类型 5: RabbitMQ 服务不可用
 
         Random random = new Random();
 
