@@ -21,7 +21,7 @@ public class RoomBookingDetailsResponse {
     private String roomGradeDetails;
     private Integer roomCapacity;
     private BigDecimal roomPrice;
-    private Boolean roomAvailability;
+
 
     // Getters and Setters
     public Long getBookingId() {
@@ -113,11 +113,5 @@ public class RoomBookingDetailsResponse {
         this.roomPrice = roomPrice;
     }
 
-    public Boolean getRoomAvailability() {
-        return roomAvailability;
-    }
 
-    public void setRoomAvailability(Boolean roomAvailability) {
-        this.roomAvailability = roomAvailability;
-    }
 }

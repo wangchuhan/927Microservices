@@ -11,11 +11,11 @@ public class ReservationSystemSimulation {
     public static void main(String[] args) {
         int totalRequests = 100;
         int successRequests = 50;
-        int failedTokenRequests = 10;       // 失败类型 1: Token 不合法
-        int failedParameterRequests = 10;   // 失败类型 2: 参数不合法
-        int timeSlotFailedRequests = 10;    // 失败类型 3: 返回可用时间段
-        int dbConnectionFailedRequests = 10;// 失败类型 4: 数据库连接失败
-        int mqFailedRequests =10;           // 失败类型 5: RabbitMQ 服务不可用
+        int failedTokenRequests = 10;       // 失败类型 1: Token 不合法   failed type1 : token is not effectiveness
+        int failedParameterRequests = 10;   // 失败类型 2: 参数不合法      failed type2 : request is not effectiveness
+        int timeSlotFailedRequests = 10;    // 失败类型 3: 返回可用时间段  failed type3 : time slot is full
+        int dbConnectionFailedRequests = 10;// 失败类型 4: 数据库连接失败   failed type4 : database disconnected
+        int mqFailedRequests =10;           // 失败类型 5: RabbitMQ 服务不可用 failed type5 : MQ server is unavailable
 
         Random random = new Random();
 
@@ -25,6 +25,7 @@ public class ReservationSystemSimulation {
 
             // Process each request based on the count and categorize them
             processRequest(caseId, i, random, successRequests, failedTokenRequests, failedParameterRequests, timeSlotFailedRequests, dbConnectionFailedRequests, mqFailedRequests);
+            System.out.println("successful generate "+i+" a row of data ");
         }
     }
 
@@ -37,13 +38,13 @@ public class ReservationSystemSimulation {
             String startAcceptRequest = getCurrentTimestamp();
             Thread.sleep(100); // Simulate delay
             String completeAcceptRequest = getCurrentTimestamp();
-            Utils.writeLogToCSV(caseId, startAcceptRequest, completeAcceptRequest, "Accept Request", "Request Validator", "Customer");
+            Utils.writeLogToCSV("tableReservation",caseId, startAcceptRequest, completeAcceptRequest, "Accept Request", "Request Validator", "Customer");
 
             // Step 2: Check token (Simulate with 0.2 seconds)
             String startCheckToken = getCurrentTimestamp();
             Thread.sleep(200); // Simulate delay
             String completeCheckToken = getCurrentTimestamp();
-            Utils.writeLogToCSV(caseId, startCheckToken, completeCheckToken, "Check Token Validity", "Token Validator", "System");
+            Utils.writeLogToCSV("tableReservation",caseId, startCheckToken, completeCheckToken, "Check Token Validity", "Token Validator", "System");
 
             // Determine the type of response based on requestId
             if (requestId <= successRequests) {
@@ -79,31 +80,31 @@ public class ReservationSystemSimulation {
         String startCheckRequest = getCurrentTimestamp();
         Thread.sleep(100); // Simulate delay
         String completeCheckRequest = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startCheckRequest, completeCheckRequest, "Check Request Parameters", "Request Validator", "Validator");
+        Utils.writeLogToCSV("tableReservation",caseId, startCheckRequest, completeCheckRequest, "Check Request Parameters", "Request Validator", "Validator");
 
         // Step 4: Check table availability
         String startCheckTableAvailability = getCurrentTimestamp();
         Thread.sleep(200); // Simulate delay
         String completeCheckTableAvailability = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startCheckTableAvailability, completeCheckTableAvailability, "Check Table Availability", "Table Manager", "System");
+        Utils.writeLogToCSV("tableReservation",caseId, startCheckTableAvailability, completeCheckTableAvailability, "Check Table Availability", "Table Manager", "System");
 
         // Step 5: Lock table
         String startLockTable = getCurrentTimestamp();
         Thread.sleep(200); // Simulate delay
         String completeLockTable = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startLockTable, completeLockTable, "Lock Table", "Table Manager", "System");
+        Utils.writeLogToCSV("tableReservation",caseId, startLockTable, completeLockTable, "Lock Table", "Table Manager", "System");
 
         // Step 6: Reservation successful
         String startReservationSuccess = getCurrentTimestamp();
         Thread.sleep(100); // Simulate delay
         String completeReservationSuccess = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startReservationSuccess, completeReservationSuccess, "Reservation Success", "Reservation System", "Customer");
+        Utils.writeLogToCSV("tableReservation",caseId, startReservationSuccess, completeReservationSuccess, "Reservation Success", "Reservation System", "Customer");
 
         // Step 7: Send message to RabbitMQ
         String startSendMessage = getCurrentTimestamp();
         Thread.sleep(100); // Simulate delay
         String completeSendMessage = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startSendMessage, completeSendMessage, "Send Message to MQ", "Message Queue", "System");
+        Utils.writeLogToCSV("tableReservation",caseId, startSendMessage, completeSendMessage, "Send Message to MQ", "Message Queue", "System");
     }
 
     /**
@@ -114,7 +115,7 @@ public class ReservationSystemSimulation {
         String startReturnInvalidToken = getCurrentTimestamp();
         Thread.sleep(100); // Simulate delay
         String completeReturnInvalidToken = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startReturnInvalidToken, completeReturnInvalidToken, "Return Invalid Token", "Token Validator", "System");
+        Utils.writeLogToCSV("tableReservation",caseId, startReturnInvalidToken, completeReturnInvalidToken, "Return Invalid Token", "Token Validator", "System");
     }
 
     /**
@@ -125,7 +126,7 @@ public class ReservationSystemSimulation {
         String startCheckRequest = getCurrentTimestamp();
         Thread.sleep(100); // Simulate delay
         String completeCheckRequest = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startCheckRequest, completeCheckRequest, "Check Request Parameters", "Request Validator", "Validator");
+        Utils.writeLogToCSV("tableReservation",caseId, startCheckRequest, completeCheckRequest, "Check Request Parameters", "Request Validator", "Validator");
 
         // Step 4: Detect parameter errors (randomly select the error type)
         int errorType = random.nextInt(3);
@@ -135,21 +136,21 @@ public class ReservationSystemSimulation {
                 String startInvalidTimeSlot = getCurrentTimestamp();
                 Thread.sleep(100); // Simulate delay
                 String completeInvalidTimeSlot = getCurrentTimestamp();
-                Utils.writeLogToCSV(caseId, startInvalidTimeSlot, completeInvalidTimeSlot, "Return Invalid Time Slot", "Time Slot Validator", "Validator");
+                Utils.writeLogToCSV("tableReservation",caseId, startInvalidTimeSlot, completeInvalidTimeSlot, "Return Invalid Time Slot", "Time Slot Validator", "Validator");
                 break;
             case 1:
                 // Invalid date format
                 String startInvalidDateFormat = getCurrentTimestamp();
                 Thread.sleep(100); // Simulate delay
                 String completeInvalidDateFormat = getCurrentTimestamp();
-                Utils.writeLogToCSV(caseId, startInvalidDateFormat, completeInvalidDateFormat, "Return Invalid Date Format", "Date Validator", "Validator");
+                Utils.writeLogToCSV("tableReservation",caseId, startInvalidDateFormat, completeInvalidDateFormat, "Return Invalid Date Format", "Date Validator", "Validator");
                 break;
             case 2:
                 // Invalid quantity
                 String startInvalidQuantity = getCurrentTimestamp();
                 Thread.sleep(100); // Simulate delay
                 String completeInvalidQuantity = getCurrentTimestamp();
-                Utils.writeLogToCSV(caseId, startInvalidQuantity, completeInvalidQuantity, "Return Invalid Quantity", "Quantity Validator", "Validator");
+                Utils.writeLogToCSV("tableReservation",caseId, startInvalidQuantity, completeInvalidQuantity, "Return Invalid Quantity", "Quantity Validator", "Validator");
                 break;
         }
     }
@@ -162,19 +163,19 @@ public class ReservationSystemSimulation {
         String startCheckRequest = getCurrentTimestamp();
         Thread.sleep(100); // Simulate delay
         String completeCheckRequest = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startCheckRequest, completeCheckRequest, "Check Request Parameters", "Request Validator", "Validator");
+        Utils.writeLogToCSV("tableReservation",caseId, startCheckRequest, completeCheckRequest, "Check Request Parameters", "Request Validator", "Validator");
 
         // Step 4: Check table availability
         String startCheckTableAvailability = getCurrentTimestamp();
         Thread.sleep(200); // Simulate delay
         String completeCheckTableAvailability = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startCheckTableAvailability, completeCheckTableAvailability, "Check Table Availability", "Table Manager", "System");
+        Utils.writeLogToCSV("tableReservation",caseId, startCheckTableAvailability, completeCheckTableAvailability, "Check Table Availability", "Table Manager", "System");
 
         // Step 5: Return alternative time slots
         String startReturnTimeSlots = getCurrentTimestamp();
         Thread.sleep(100); // Simulate delay
         String completeReturnTimeSlots = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startReturnTimeSlots, completeReturnTimeSlots, "Return Alternative Time Slots", "Time Slot Manager", "System");
+        Utils.writeLogToCSV("tableReservation",caseId, startReturnTimeSlots, completeReturnTimeSlots, "Return Alternative Time Slots", "Time Slot Manager", "System");
     }
 
     /**
@@ -185,19 +186,19 @@ public class ReservationSystemSimulation {
         String startCheckRequest = getCurrentTimestamp();
         Thread.sleep(100); // Simulate delay
         String completeCheckRequest = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startCheckRequest, completeCheckRequest, "Check Request Parameters", "Request Validator", "Validator");
+        Utils.writeLogToCSV("tableReservation",caseId, startCheckRequest, completeCheckRequest, "Check Request Parameters", "Request Validator", "Validator");
 
         // Step 4: Check table availability
         String startCheckTableAvailability = getCurrentTimestamp();
         Thread.sleep(200); // Simulate delay
         String completeCheckTableAvailability = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startCheckTableAvailability, completeCheckTableAvailability, "Check Table Availability", "Table Manager", "System");
+        Utils.writeLogToCSV("tableReservation",caseId, startCheckTableAvailability, completeCheckTableAvailability, "Check Table Availability", "Table Manager", "System");
 
         // Step 5: Database connection failed
         String startDbConnectionFailed = getCurrentTimestamp();
         Thread.sleep(100); // Simulate delay
         String completeDbConnectionFailed = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startDbConnectionFailed, completeDbConnectionFailed, "Database Connection Failed", "Database", "System");
+        Utils.writeLogToCSV("tableReservation",caseId, startDbConnectionFailed, completeDbConnectionFailed, "Database Connection Failed", "Database", "System");
     }
 
     /**
@@ -208,31 +209,31 @@ public class ReservationSystemSimulation {
         String startCheckRequest = getCurrentTimestamp();
         Thread.sleep(100); // Simulate delay
         String completeCheckRequest = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startCheckRequest, completeCheckRequest, "Check Request Parameters", "Request Validator", "Validator");
+        Utils.writeLogToCSV("tableReservation",caseId, startCheckRequest, completeCheckRequest, "Check Request Parameters", "Request Validator", "Validator");
 
         // Step 4: Check table availability
         String startCheckTableAvailability = getCurrentTimestamp();
         Thread.sleep(200); // Simulate delay
         String completeCheckTableAvailability = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startCheckTableAvailability, completeCheckTableAvailability, "Check Table Availability", "Table Manager", "System");
+        Utils.writeLogToCSV("tableReservation",caseId, startCheckTableAvailability, completeCheckTableAvailability, "Check Table Availability", "Table Manager", "System");
 
         // Step 5: Lock table
         String startLockTable = getCurrentTimestamp();
         Thread.sleep(200); // Simulate delay
         String completeLockTable = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startLockTable, completeLockTable, "Lock Table", "Table Manager", "System");
+        Utils.writeLogToCSV("tableReservation",caseId, startLockTable, completeLockTable, "Lock Table", "Table Manager", "System");
 
         // Step 6: Reservation successful
         String startReservationSuccess = getCurrentTimestamp();
         Thread.sleep(100); // Simulate delay
         String completeReservationSuccess = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startReservationSuccess, completeReservationSuccess, "Reservation Success", "Reservation System", "Customer");
+        Utils.writeLogToCSV("tableReservation",caseId, startReservationSuccess, completeReservationSuccess, "Reservation Success", "Reservation System", "Customer");
 
         // Step 7: RabbitMQ unavailable
         String startMqUnavailable = getCurrentTimestamp();
         Thread.sleep(100); // Simulate delay
         String completeMqUnavailable = getCurrentTimestamp();
-        Utils.writeLogToCSV(caseId, startMqUnavailable, completeMqUnavailable, "RabbitMQ Service Unavailable", "Message Queue", "System");
+        Utils.writeLogToCSV("tableReservation",caseId, startMqUnavailable, completeMqUnavailable, "RabbitMQ Service Unavailable", "Message Queue", "System");
     }
 
     /**
