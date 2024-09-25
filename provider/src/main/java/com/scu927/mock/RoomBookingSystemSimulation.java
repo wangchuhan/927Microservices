@@ -26,9 +26,9 @@ public class RoomBookingSystemSimulation {
 
     public static void main(String[] args) throws InterruptedException {
         String logType = "roomBooking";  // Log type is always "tourBooking"
-        int totalRequests = 80;
+        int totalRequests = 100;
 
-        int successfulRequests = 30;
+        int successfulRequests = 50;
         int unPaymentRequests = 20;
         int failedTokenRequests = 10;
         int failedParameterRequests = 10;
