@@ -82,3 +82,21 @@ after starting  RabbitMQ you can start project
 2 run provider/src/main/java/com/scu927/ProviderApplication.java
 
 3 run consumer/src/main/java/com/scu927/ConsumerApplication.java
+
+### 6. Testing Instructions
+1. Testing with Swagger
+   You can use Swagger for API testing, which provides a more user-friendly visual interface.
+   Once the project is running, you can access Swagger UI at the following URL:
+   http://127.0.0.1:8082/swagger-ui/index.html
+   Testing steps:
+     First, use the login API to authenticate. The username is 8259665, and the password is 123.
+     You can also create your own account in the user table of the database by following the format of the first entry
+     After a successful login, Swagger will return a JWT token.
+     Click the Authorize button (lock icon) in the top right corner of the Swagger UI and input the JWT token you received in the format Bearer <your_token>, then click "Authorize."
+     After authorization, close the dialog and proceed with testing the other APIs.
+
+2. Testing with Postman
+   You can also use Postman for testing the APIs. Please refer to the final report for specific parameters and request formats.
+
+
+

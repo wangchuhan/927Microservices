@@ -21,7 +21,7 @@ public class SimpleTaskScheduler {
 
 
     //use cron to execute service once 30min
-    @Scheduled(cron = "* */30 * * * *")
+    @Scheduled(cron = "* * */30 * * *")
     public void executeTaskWithCron() {
 
         Response<?> response = roomBookingService.cancelAllExpiredBooking();
