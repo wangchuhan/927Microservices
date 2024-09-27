@@ -16,15 +16,15 @@ spring:
 
   mail:
     host: smtp.163.com
-    port: 465
+    port: 465                        # SSL port for secure email communication
     username: wangchuhan163@163.com  # Replace with your email address
-    password:       # Replace with your email authorization code (not the login password)
+    password:                        # Replace with your email authorization code (not the login password)
     properties:
       mail:
         smtp:
           auth: true
           ssl:
-            enable: true
+            enable: true   # true is always correct; if set to false, it may not work in UOW Wi-Fi environment
 
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/consumer_db?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
@@ -56,7 +56,11 @@ feign:
 
 
 
-
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
 
 
 
