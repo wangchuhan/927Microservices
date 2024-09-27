@@ -1,5 +1,11 @@
 # 927Microservices
 
+# Prerequisites
+Java Version: 21
+Maven Version: 3.9.9
+RabbitMQ Version: 3.13.7
+Erlang Version: 27.0.1
+MySQL Version: 8.0.39
 ## Project Description
 This is a microservices-based project, which includes multiple services such as `consumer` and `provider`.
 
@@ -29,8 +35,13 @@ mail:
   username: your-email@example.com     # Replace with your email address
   password: your-email-password        # Replace with your email authorization code (not the login password) 
 
-### 4. 
-1.Create Databases and Users
+#### 4. 
+  1. Install MySQL
+   Before running the project, you need to install MySQL. You can download and install MySQL from the official website: https://dev.mysql.com/downloads/mysql/.
+
+   Make sure to install MySQL version 8.0.39 (or compatible) to ensure full compatibility with this project.
+
+  1. Create Databases and Users
   Create the provider_db and consumer_db databases as per the configurations in the application.yml file.
   Create a database user and assign appropriate permissions for both databases.
   DDl:
@@ -44,22 +55,22 @@ mail:
 
      -- 创建用户并为两个数据库赋予权限
     -- Create a user and assign permissions for both databases
-     CREATE USER 'your_db_user'@'localhost' IDENTIFIED BY 'your_db_password';
+     CREATE USER 'root'@'localhost' IDENTIFIED BY '123456';
 
     -- 为 provider_db 赋予用户权限
     -- Grant the user privileges for provider_db
-    GRANT ALL PRIVILEGES ON provider_db.* TO 'your_db_user'@'localhost';
+    GRANT ALL PRIVILEGES ON provider_db.* TO 'root'@'localhost';
 
     -- 为 consumer_db 赋予用户权限
     -- Grant the user privileges for consumer_db
-    GRANT ALL PRIVILEGES ON consumer_db.* TO 'your_db_user'@'localhost';
+    GRANT ALL PRIVILEGES ON consumer_db.* TO 'root'@'localhost';
 
      -- 刷新权限
     -- Refresh privileges
       FLUSH PRIVILEGES;
-2.SQL Scripts
-   In the sql folder (on the left), you will find the SQL scripts for creating the tables and inserting initial data. These scripts include table definitions for the provider_db and consumer_db, as well as INSERT statements for populating the tables with test data.
-3.Execution
+ 2. Execute SQL Scripts
+    In the sql folder (on the left), you will find the SQL scripts for creating the tables and inserting initial data. These scripts include table definitions for the provider_db and consumer_db, as well as INSERT statements for populating the tables with test data.
+ 3. Execution
   Execute the SQL scripts in your MySQL environment to set up the database structure and initial data.
 
 
