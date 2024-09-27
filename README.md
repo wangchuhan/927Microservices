@@ -36,26 +36,26 @@ mail:
   password: your-email-password        # Replace with your email authorization code (not the login password) 
 
 #### 4. 
-  1. Install MySQL
-   Before running the project, you need to install MySQL. You can download and install MySQL from the official website: https://dev.mysql.com/downloads/mysql/.
+1. Install MySQL
+ Before running the project, you need to install MySQL. You can download and install MySQL from the official website: https://dev.mysql.com/downloads/mysql/.
 
    Make sure to install MySQL version 8.0.39 (or compatible) to ensure full compatibility with this project.
 
-  1. Create Databases and Users
-  Create the provider_db and consumer_db databases as per the configurations in the application.yml file.
-  Create a database user and assign appropriate permissions for both databases.
-  DDl:
-     -- 创建 provider_db 数据库
-     -- Create the provider_db database
-       CREATE DATABASE provider_db;
+2. Create Databases and Users
+Create the provider_db and consumer_db databases as per the configurations in the application.yml file.
+Create a database user and assign appropriate permissions for both databases.
+DDl:
+   -- 创建 provider_db 数据库
+   -- Create the provider_db database
+     CREATE DATABASE provider_db;
 
-     -- 创建 consumer_db 数据库
-     -- Create the consumer_db database
-     CREATE DATABASE consumer_db;
+   -- 创建 consumer_db 数据库
+   -- Create the consumer_db database
+   CREATE DATABASE consumer_db;
 
-     -- 创建用户并为两个数据库赋予权限
-    -- Create a user and assign permissions for both databases
-     CREATE USER 'root'@'localhost' IDENTIFIED BY '123456';
+   -- 创建用户并为两个数据库赋予权限
+  -- Create a user and assign permissions for both databases
+   CREATE USER 'root'@'localhost' IDENTIFIED BY '123456';
 
     -- 为 provider_db 赋予用户权限
     -- Grant the user privileges for provider_db
@@ -68,9 +68,9 @@ mail:
      -- 刷新权限
     -- Refresh privileges
       FLUSH PRIVILEGES;
- 2. Execute SQL Scripts
-    In the sql folder (on the left), you will find the SQL scripts for creating the tables and inserting initial data. These scripts include table definitions for the provider_db and consumer_db, as well as INSERT statements for populating the tables with test data.
- 3. Execution
+3. Execute SQL Scripts
+   In the sql folder (on the left), you will find the SQL scripts for creating the tables and inserting initial data. These scripts include table definitions for the provider_db and consumer_db, as well as INSERT statements for populating the tables with test data.
+4. Execution
   Execute the SQL scripts in your MySQL environment to set up the database structure and initial data.
 
 
