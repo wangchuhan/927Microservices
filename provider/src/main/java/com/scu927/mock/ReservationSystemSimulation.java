@@ -11,11 +11,11 @@ public class ReservationSystemSimulation {
     public static void main(String[] args) {
         int totalRequests = 100;
         int successRequests = 50;
-        int failedTokenRequests = 10;       // 失败类型 1: Token 不合法   failed type1 : token is not effectiveness
-        int failedParameterRequests = 10;   // 失败类型 2: 参数不合法      failed type2 : request is not effectiveness
-        int timeSlotFailedRequests = 10;    // 失败类型 3: 返回可用时间段  failed type3 : time slot is full
-        int dbConnectionFailedRequests = 10;// 失败类型 4: 数据库连接失败   failed type4 : database disconnected
-        int mqFailedRequests =10;           // 失败类型 5: RabbitMQ 服务不可用 failed type5 : MQ server is unavailable
+        int failedTokenRequests = 10;       // failed type1 : token is not effectiveness
+        int failedParameterRequests = 10;   // failed type2 : request is not effectiveness
+        int timeSlotFailedRequests = 10;    // failed type3 : time slot is full
+        int dbConnectionFailedRequests = 10;// failed type4 : database disconnected
+        int mqFailedRequests =10;           // failed type5 : MQ server is unavailable
 
         Random random = new Random();
 
@@ -60,7 +60,7 @@ public class ReservationSystemSimulation {
                 // Failed type 3: Return alternative time slots
                 processTimeSlotFailedFlow(caseId);
             } else if (requestId <= successRequests + failedTokenRequests + failedParameterRequests + timeSlotFailedRequests + dbConnectionFailedRequests) {
-                // 这里移动了数据库连接失败的逻辑
+                // Failed type 4: Database connect failed
                 processDbFailedAfterTableCheckFlow(caseId);
             } else {
                 // Failed type 5: RabbitMQ unavailable

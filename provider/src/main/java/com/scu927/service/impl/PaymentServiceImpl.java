@@ -76,9 +76,8 @@ public class PaymentServiceImpl implements IPaymentService {
         return Response.error(500, "Booking has already been paid or expired. " );
     }
 
-    // 模拟支付成功
+    // Simulate successful payments
     private boolean simulatePayment(PaymentRequest paymentRequest) {
-        // 模拟支付成功
         return true;
     }
 

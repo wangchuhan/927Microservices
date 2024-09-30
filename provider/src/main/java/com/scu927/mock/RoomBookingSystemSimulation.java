@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class RoomBookingSystemSimulation {
     private static final AtomicLong counter = new AtomicLong(1);
 
-    // 生成唯一的 Case ID
+    // Generate unique Case ID
     public static String generateUniqueCaseId() {
         return String.valueOf(counter.getAndIncrement());
     }
@@ -357,7 +357,7 @@ public class RoomBookingSystemSimulation {
 
 
 
-    // 获取当前时间戳
+    // Get current timestamp
     public static String getCurrentTimestamp() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
         return LocalDateTime.now().format(formatter);

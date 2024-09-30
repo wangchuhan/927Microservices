@@ -18,6 +18,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new JwtInterceptor(jwtUtil))
-                .addPathPatterns("/api/**");  // 配置拦截的路径
+                .addPathPatterns("/api/**");  // Configure interceptor path
     }
 }

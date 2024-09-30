@@ -94,7 +94,7 @@ public class RoomBookingServiceImpl extends ServiceImpl<RoomBookingMapper, RoomB
 
     @Override
     public Response<?> cancelBooking(CancelBookingRequest request, HttpServletRequest httpServletRequest) {
-        // 获取预定信息
+        // Get booking information
         RoomBooking booking = roomBookingMapper.selectById(request.getId());
 
         if (booking == null) {
@@ -118,7 +118,7 @@ public class RoomBookingServiceImpl extends ServiceImpl<RoomBookingMapper, RoomB
 
         }
 
-        //update  cancellationStatus  as "CANCELLED"
+        //update cancellationStatus as "CANCELLED"
         booking.setCancellationStatus("CANCELLED");
         booking.setCancellationReason(request.getCancellationReason());
         roomBookingMapper.updateById(booking);

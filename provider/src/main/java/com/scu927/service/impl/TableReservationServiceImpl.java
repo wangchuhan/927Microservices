@@ -66,12 +66,12 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
 //        String caseId = Utils.generateUniqueCaseId();
 //        String startReceiveRequest = Utils.getCurrentTimestamp();
 //        try {
-//            Thread.sleep(150);  // 模拟处理
+//            Thread.sleep(150);  // Simulate real business processing duration
 //        } catch (InterruptedException e) {
 //            throw new RuntimeException(e);
 //        }
 //        String completeReceiveRequest = Utils.getCurrentTimestamp();
-//        // 记录开始预定
+//        // Begin logging while make new requests
 //        Utils.writeLogToCSV(caseId, startReceiveRequest,
 //                completeReceiveRequest,
 //                  "Receive Request",
@@ -179,7 +179,7 @@ public class TableReservationServiceImpl extends ServiceImpl<TableReservationMap
                 String finalMessage = message.toString();
                 // Send the message to the RabbitMQ queue
               messageProducer.sendEmailMessage(finalMessage, "tableReservationQueue");
-//                Thread.sleep(150);  // 模拟处理
+//                Thread.sleep(150);  // Simulate real business processing duration
 //                String completeSendMessageToMq = Utils.getCurrentTimestamp();
 //
 //                Utils.writeLogToCSV(caseId, startSendMessageToMq,

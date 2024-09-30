@@ -8,8 +8,8 @@ import java.math.BigDecimal;
  */
 public class RoomBookingStatusResponse {
 
-    private Long bookingId;  // 返回给前端的预定号
-    private String status;   // 返回状态信息
+    private Long bookingId;  // Return a booking ID to the front end
+    private String status;   // Return the booking status
 
     public RoomBookingStatusResponse(Long bookingId, String status) {
         this.bookingId = bookingId;
