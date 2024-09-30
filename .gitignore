@@ -1,3 +1,6 @@
 # Ignore Maven target directory
 **/target/
 *.class
+
+# Ignore generated csv files
+*.csv
