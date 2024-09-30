@@ -4,3 +4,7 @@
 
 # Ignore generated csv files
 *.csv
+
+# IntelliJ project files
+.idea
+*.iml
