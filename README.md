@@ -16,17 +16,17 @@ This is a microservices-based project, which includes multiple services such as 
 
 Following tools are required before we begin the execution:
 
-### 1. Install Erlang (Required for RabbitMQ)
+### Install Erlang (Required for RabbitMQ)
 
 RabbitMQ depends on Erlang, so Erlang must be installed.
 
 You can download and install Erlang from the official website: [Erlang Installation Guide](https://www.erlang.org/downloads).
 
-### 2. Install RabbitMQ
+### Install RabbitMQ
 
 Once Erlang is installed, proceed to install RabbitMQ. You can download and install RabbitMQ from the official guide: [RabbitMQ Installation Guide](https://www.rabbitmq.com/download.html).
 
-### 3. Modify Email Configuration
+### Modify Email Configuration
 
 Open the `consumer/src/main/resources/application.yml` file and update the following section with a test email setting:
 
@@ -38,7 +38,7 @@ mail:
   password: your-email-auth-code        # Replace with test email authorization code (not the login password) 
 ```
 
-#### 4. Setup Database
+### Setup Database
 
 1. Install MySQL
     You can download and install MySQL from the official website: [MySQL Installation Guide](https://dev.mysql.com/downloads/mysql/).
@@ -47,7 +47,7 @@ mail:
 2. Create Databases and Users
     Create two databases: provider_db and consumer_db as per the configurations in the application.yml file. Create a database user and assign appropriate permissions for both databases.
    
-   ```mysql
+   ```sql
    -- Create the provider_db database
    CREATE DATABASE provider_db;
    
@@ -55,6 +55,7 @@ mail:
    CREATE DATABASE consumer_db;
    
    -- Create a user and assign permissions for both databases
+   -- Modify the '123456' to your custom password
    CREATE USER 'root'@'localhost' IDENTIFIED BY '123456';
    
    -- Grant the user privileges for provider_db
@@ -70,19 +71,29 @@ mail:
 3. Execute SQL Scripts
    In the following path: `927Microservices/sql/`, you will find some SQL scripts for creating the tables and inserting initial data. These scripts include table definitions for the provider_db and consumer_db, as well as INSERT statements for populating the tables with test data. Execute the SQL scripts in your MySQL environment to set up the database structure and initial data.
 
-### 5. Start project
+### Configure Services
 
-After starting  RabbitMQ server you can turn on microservices (You should use an IDE so it will auto configure for you):
+There are two configuration files need to be configured for MySQL & RabbitMQ connection:
+
+- `provider/src/main/resources/application.yml`
+
+- `consumer/src/main/resources/application.yml`
+
+RabbitMQ, MySQL and email information need to be input, config files' comments should be followed.
+
+### Start Services
+
+After starting  RabbitMQ server you can turn on microservices (An IDE should be adopted, it will auto configure dependencies):
 
 1. Install all maven dependencies by running `mvn clean install`
 
-2. Execute eureka-server/src/main/java/com/scu927/EurekaServerApplication.java
+2. Execute `eureka-server/src/main/java/com/scu927/EurekaServerApplication.java`
 
-3. Execute provider/src/main/java/com/scu927/ProviderApplication.java
+3. Execute `provider/src/main/java/com/scu927/ProviderApplication.java`
 
-4. Execute consumer/src/main/java/com/scu927/ConsumerApplication.java
+4. Execute `consumer/src/main/java/com/scu927/ConsumerApplication.java`, if `unsupported or unrecognized SSL` error shows up then please tweak `consumer/src/main/resources/application.yml` file's config `spring/mail/properties/mail/smtp/ssl`, because some email providers such as Microsoft Outlook uses STARTTLS instead of SSL/TLS.
 
-### 6. Test & Play with APIs
+### Test & Play with APIs
 
 1. Testing with Swagger
    You can use Swagger for API testing, which provides a more user-friendly visual interface. Once the project is running, you can access Swagger UI at the following [URL](http://127.0.0.1:8082/swagger-ui/index.html)
@@ -97,5 +108,3 @@ After starting  RabbitMQ server you can turn on microservices (You should use an
 ## One More Thing
 
 Scripts for Task F (i) generating process logs are located in the following path: `/927Microservices/provider/src/main/java/com/scu927/mock/`.
-
-
