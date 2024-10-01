@@ -10,7 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableEurekaServer
-@EnableFeignClients  // if use Feign invoking service
+@EnableFeignClients  // if feign is used to invoke service
 public class ConsumerApplication {
 
     public static void main(String[] args) {
