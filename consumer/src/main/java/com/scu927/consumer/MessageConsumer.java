@@ -24,35 +24,30 @@ public class MessageConsumer {
     @Value("${spring.mail.username}")
     private  String mailAddress;
 
-    // 监听 "scenicSpotQueue" 队列的消息
     // Listen to the "scenicSpotQueue" queue
     @RabbitListener(queues = "scenicSpotQueue")
     public void receiveScenicSpotMessage(String message) {
         processMessage(message,"ScenicSpot");
     }
 
-    // 监听 "tableReservationQueue" 队列的消息
     // Listen to the "tableReservationQueue" queue
     @RabbitListener(queues = "tableReservationQueue")
     public void receiveTableReservationMessage(String message) {
         processMessage(message,"tableReservation");
     }
 
-    // 监听 "roomBookingQueue" 队列的消息
     // Listen to the "roomBookingQueue" queue
     @RabbitListener(queues = "roomBookingQueue")
     public void receiveRoomBookingMessage(String message) {
         processMessage(message,"roomBooking");
     }
 
-    // 监听 "paymentReminderQueue" 队列的消息
     // Listen to the "paymentReminderQueue" queue
     @RabbitListener(queues = "paymentReminderQueue")
     public void paymentReminderQueueMessage(String message) {
         processMessage(message,"paymentReminder");
     }
 
-    // 监听 "roomCancelReminderQueue" 队列的消息
     // Listen to the "roomCancelReminderQueue" queue
     @RabbitListener(queues = "roomCancelReminderQueue")
     public void roomCancelReminderMessage(String message) {
@@ -60,43 +55,41 @@ public class MessageConsumer {
     }
 
     /**
-     * 统一处理接收到的消息
      * Process the received message
      *
-     * @param message 收到的消息内容 / The message content received
+     * @param message The message content received
      */
     private void processMessage(String message,String messageType) {
         try {
-            // 校验消息格式 / Validate the message format
+            // Validate the message format
             if (isValidMessageFormat(message)) {
-                // 解析邮件地址和预定信息 / Extract email and reservation info
+                // Extract email and reservation info
                 String email = extractEmailFromMessage(message);
                 String reservationInfo = extractReservationInfo(message);
                 String subject = getEmailSubjectByMessageType(messageType);
-                // 验证邮件地址格式 / Validate email format
+                // Validate email format
                 if (isValidEmail(email)) {
                     sendEmailNotification(email, reservationInfo,subject);
                     System.out.println("Email sent to: " + email);
                 } else {
                     System.out.println("Invalid email format: " + email);
-                    // 可选：记录日志或执行其他处理 / Optional: log the error or take other actions
+                    // Optional: log the error or take other actions
                 }
             } else {
                 System.out.println("Invalid message format: " + message);
-                // 可选：记录日志或执行其他处理 / Optional: log the error or take other actions
+                // Optional: log the error or take other actions
             }
         } catch (Exception e) {
             System.out.println("Failed to process message: " + e.getMessage());
-            // 可选：记录日志或执行其他处理 / Optional: log the error or take other actions
+            // Optional: log the error or take other actions
         }
     }
 
     /**
-     * 发送邮件通知
      * Send email notification
      *
-     * @param toEmail 收件人邮箱 / Recipient's email
-     * @param reservationInfo 预定信息 / Reservation info
+     * @param toEmail Recipient's email
+     * @param reservationInfo Reservation info
      */
     private void sendEmailNotification(String toEmail, String reservationInfo,String subjectType) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -111,8 +104,8 @@ public class MessageConsumer {
     /**
      * get subject from message type
      *
-     * @param messageType 消息类型 / The type of message
-     * @return 邮件主题 / Email subject
+     * @param messageType The type of message
+     * @return Email subject
      */
     private String getEmailSubjectByMessageType(String messageType) {
         switch (messageType) {
@@ -132,11 +125,10 @@ public class MessageConsumer {
     }
 
     /**
-     * 从消息中提取邮箱地址
      * Extract the email address from the message
      *
-     * @param message 消息内容 / The message content
-     * @return 邮箱地址 / Email address
+     * @param message The message content
+     * @return Email address
      */
     private static String  extractEmailFromMessage(String message) {
         try {
@@ -158,11 +150,10 @@ public class MessageConsumer {
         }
     }
     /**
-     * 从消息中提取预定信息
      * Extract the reservation info from the message
      *
-     * @param message 消息内容 / The message content
-     * @return 预定信息 / Reservation information
+     * @param message The message content
+     * @return Reservation information
      */
     /**
      * Extract the reservation info from the message
@@ -172,12 +163,11 @@ public class MessageConsumer {
      */
     private static String extractReservationInfo(String message) {
         try {
-            // 使用正则表达式匹配 "Email:" 后的所有内容
             // Use regex to extract everything after "Email:"
             Pattern reservationPattern = Pattern.compile("Email:\\s*\\S+;\\s*(.*)", Pattern.DOTALL);
             Matcher matcher = reservationPattern.matcher(message);
             if (matcher.find()) {
-                return matcher.group(1).trim(); // 提取并返回邮箱后的所有数据 / Extract and return everything after email
+                return matcher.group(1).trim(); // Extract and return everything after email
             } else {
                 System.out.println("Reservation info not found in message");
                 return null;
@@ -189,11 +179,10 @@ public class MessageConsumer {
     }
 
     /**
-     * 验证邮箱格式
      * Validate the email format
      *
-     * @param email 邮箱地址 / Email address
-     * @return 是否是有效的邮箱格式 / Whether it's a valid email format
+     * @param email Email address
+     * @return Whether it's a valid email format
      */
     private static boolean isValidEmail(String email) {
         if (email == null) {
@@ -206,14 +195,13 @@ public class MessageConsumer {
     }
 
     /**
-     * 验证消息格式
      * Validate the message format
      *
-     * @param message 消息内容 / The message content
-     * @return 是否符合预期格式 / Whether the format is valid
+     * @param message The message content
+     * @return Whether the format is valid
      */
     private boolean isValidMessageFormat(String message) {
-        // 检查消息是否包含必要的字段 Email 和 Reservation / Check if the message contains the necessary fields: Email and Reservation
+        // Check if the message contains the necessary fields: Email and Reservation
         return message.contains("Email:") ;
     }
 

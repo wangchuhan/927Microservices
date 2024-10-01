@@ -19,7 +19,7 @@ public class FilterConfig {
     public FilterRegistrationBean<JwtFilter> jwtFilterRegistration() {
         FilterRegistrationBean<JwtFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(jwtFilter);
-        registrationBean.addUrlPatterns("/api/*");  // 对 /api/* 的请求进行 JWT 验证
+        registrationBean.addUrlPatterns("/api/*");  // Use JWT to verify all /api/* requests
         return registrationBean;
     }
 }

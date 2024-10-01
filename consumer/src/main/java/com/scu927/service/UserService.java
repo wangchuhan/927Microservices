@@ -10,7 +10,7 @@ import java.util.List;
  * @date 2024/9/7
  */
 public interface UserService extends IService<User> {
-    // 你可以在这里定义额外的业务方法（如果有需要）
+    // Custom functions can be defined here (if needed)
 
     User selectByUsername(String username);
 }
