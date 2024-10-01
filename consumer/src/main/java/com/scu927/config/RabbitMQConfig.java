@@ -32,7 +32,7 @@ public class RabbitMQConfig {
         return QueueBuilder.durable(SCENIC_SPOT_QUEUE)
                 .withArgument("x-dead-letter-exchange", DLX_EXCHANGE)
                 .withArgument("x-dead-letter-routing-key", DLQ_SCENIC_SPOT)
-                .withArgument("x-message-ttl", 10000)  // Example TTL
+                .withArgument("x-message-ttl", 60000)  // Example TTL
                 .build();
     }
 
@@ -42,7 +42,7 @@ public class RabbitMQConfig {
         return QueueBuilder.durable(ROOM_BOOKING_QUEUE)
                 .withArgument("x-dead-letter-exchange", DLX_EXCHANGE)
                 .withArgument("x-dead-letter-routing-key", DLQ_ROOM_BOOKING)
-                .withArgument("x-message-ttl", 10000)  // Example TTL
+                .withArgument("x-message-ttl", 60000)  // Example TTL
                 .build();
     }
 
@@ -52,7 +52,7 @@ public class RabbitMQConfig {
         return QueueBuilder.durable(TABLE_RESERVATION_QUEUE)
                 .withArgument("x-dead-letter-exchange", DLX_EXCHANGE)
                 .withArgument("x-dead-letter-routing-key", DLQ_TABLE_RESERVATION)
-                .withArgument("x-message-ttl", 10000)  // Example TTL
+                .withArgument("x-message-ttl", 60000)  // Example TTL
                 .build();
     }
 
@@ -62,7 +62,7 @@ public class RabbitMQConfig {
         return QueueBuilder.durable(PAYMENT_REMINDER_QUEUE)
                 .withArgument("x-dead-letter-exchange", DLX_EXCHANGE)
                 .withArgument("x-dead-letter-routing-key", DLQ_PAYMENT_REMINDER)
-                .withArgument("x-message-ttl", 10000)  // Example TTL
+                .withArgument("x-message-ttl", 60000)  // Example TTL
                 .build();
     }
 
@@ -72,7 +72,7 @@ public class RabbitMQConfig {
         return QueueBuilder.durable(ROOM_CANCEL_REMINDER_QUEUE)
                 .withArgument("x-dead-letter-exchange", DLX_EXCHANGE)
                 .withArgument("x-dead-letter-routing-key", DLQ_ROOM_CANCEL_REMINDER)
-                .withArgument("x-message-ttl", 10000)  // Example TTL
+                .withArgument("x-message-ttl", 60000)  // Example TTL
                 .build();
     }
 
